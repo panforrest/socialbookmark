@@ -14,10 +14,27 @@ router.get('/', function(req, res, next){
 		return
 	}
 
-	res.json({
-		confirmation: 'success',
-		url: url
+	superagent
+	.get(url)
+	.query(null)
+	.set('Accept', 'text/html')
+	.end(function(err, response){
+        if (err){
+        	res.json({
+        		confirmation: 'fail',
+        		message: err
+        	})
+
+        	return
+        }
+
+        res.send(response.text)
 	})
+
+	// res.json({
+	// 	confirmation: 'success',
+	// 	url: url
+	// })
 })
 
 module.exports = router
