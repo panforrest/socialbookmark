@@ -27,5 +27,20 @@ module.exports = {
 				resolve(profile)
 			})
 		})
-	}
+	},
+
+    create: function(params){
+    	return new Promise(function(resolve, reject){
+    		Profile.create(params, function(err, profile){
+    			if (err){
+    				reject(err)
+    				return
+    			}
+
+    			resolve(profile)
+    		})
+    	})
+    }
+
+
 }
