@@ -28,7 +28,31 @@ router.get('/', function(req, res, next){
         	return
         }
 
-        res.send(response.text)
+        // res.send(response.text)
+        var html = response.text
+
+        var props = ['og:title', 'og:description', 'og:image']
+        var metaData = {}
+        $ = cheerio.load(html)
+        $('meta').each(function(i, meta){
+        	if (meta.attribs != null){
+        		var attribs = meta.attribs
+        		if (attribs.property != null){
+        			var prop = attribs.property
+        			if (props.indexOf(prop) != -1){
+        				var key = prop.replace('og:', '')
+        				metaData[key] = attribs.content
+        			}
+        		}
+        	}
+        }) 
+
+        metaData['url'] = url
+        res.json({
+        	confirmation: 'success',
+        	tags: metaData
+        })
+
 	})
 
 	// res.json({
