@@ -14,5 +14,18 @@ module.exports = {
 				resolve(bookmarks)
 			})
 		})
+	},
+
+	findById: function(id){
+		return new Promise(function(resolve, reject){
+			Bookmark.findById(id, function(err, bookmark){
+				if (err){
+					reject(err)
+					return
+				}
+
+				resolve(bookmark)
+			})
+		})
 	}
 }
