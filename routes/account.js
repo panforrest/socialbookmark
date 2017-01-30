@@ -29,11 +29,17 @@ router.get('/:action', function(req, res, next){
 		var token = req.session.token
 		utils.JWT.verify(token, process.env.TOKEN_SECRET)
 		.then(function(decode){
-            
+            return controllers.profile.findById(decode.id)
 
+			// res.json({
+			// 	confirmation: 'success',
+			// 	token: decode
+			// })
+		})
+		.then(function(profile){
 			res.json({
 				confirmation: 'success',
-				token: decode
+				profile: profile
 			})
 		})
 		.catch(function(err){
