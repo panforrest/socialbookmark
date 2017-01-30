@@ -13,7 +13,13 @@ module.exports = {
 					return
 				}
 
-				resolve(bookmarks)
+				var summaries = []
+				bookmarks.forEach(function(bookmark){
+					summaries.push(bookmark.summary())
+				})
+
+				resolve(summaries)
+
 			})
 		})
 	},
@@ -26,7 +32,7 @@ module.exports = {
 					return
 				}
 
-				resolve(bookmark)
+				resolve(bookmark.summary())
 			})
 		})
 	},
@@ -59,7 +65,7 @@ module.exports = {
 	    				return
 	    			}
 
-	    			resolve(bookmark)
+	    			resolve(bookmark.summary())
 	    		})
 
 		        // var props = ['og:title', 'og:description', 'og:image']

@@ -10,4 +10,18 @@ var BookmarkSchema = new mongoose.Schema({
 
 })
 
+BookmarkSchema.methods.summary = function(){
+	var summary = {
+		id: this._id.toString(),
+		profile: this.profile,
+		url: this.url,
+		description: this.description,
+		image: this.image,
+		timestamp: this.timestamp
+
+	}
+
+	return summary
+}
+
 module.exports = mongoose.model('BookmarkSchema', BookmarkSchema)

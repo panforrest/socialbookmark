@@ -6,6 +6,8 @@
     "start": "node ./bin/www"
   },
   "dependencies": {
+    "bcrypt": "^1.0.2",
+    "bcryptjs": "^2.4.0",
     "bluebird": "^3.4.7",
     "body-parser": "~1.13.2",
     "cheerio": "^0.22.0",

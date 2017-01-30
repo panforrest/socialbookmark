@@ -9,7 +9,7 @@ require('dotenv').config()
 
 var routes = require('./routes/index');
 var api = require('./routes/api');
-var scrape = require('./routes/scrape');
+// var scrape = require('./routes/scrape');
 
 // var dbUrl = 'mongodb://localhost/Social-Bookmark'
 mongoose.connect(process.env.DB_URL, function(err, res){
@@ -38,7 +38,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', routes);
 // app.use('/users', users);
 app.use('/api', api)
-app.use('/scrape', scrape)
+// app.use('/scrape', scrape)
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
