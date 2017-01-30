@@ -10,6 +10,7 @@ require('dotenv').config()
 var routes = require('./routes/index');
 var api = require('./routes/api');
 // var scrape = require('./routes/scrape');
+var account = require('./routes/account')
 
 // var dbUrl = 'mongodb://localhost/Social-Bookmark'
 mongoose.connect(process.env.DB_URL, function(err, res){
@@ -39,6 +40,7 @@ app.use('/', routes);
 // app.use('/users', users);
 app.use('/api', api)
 // app.use('/scrape', scrape)
+app.use('/account', account)
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
