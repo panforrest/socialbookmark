@@ -6,7 +6,7 @@ var BookmarkSchema = new mongoose.Schema({
     title: {type:String, trim:true, default:''},
     description: {type:String, trim:true, default:''},
     image: {type:String, default:''},
-    timestamp: {type:String, default:Date.now}
+    timestamp: {type:Date, default:Date.now}
 
 })
 

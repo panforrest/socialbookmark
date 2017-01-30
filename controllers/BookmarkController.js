@@ -13,6 +13,11 @@ module.exports = {
 					return
 				}
 
+				if (isRaw){
+					resolve(bookmarks)
+					return
+				}
+
 				var summaries = []
 				bookmarks.forEach(function(bookmark){
 					summaries.push(bookmark.summary())
