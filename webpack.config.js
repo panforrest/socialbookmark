@@ -7,19 +7,19 @@ module.exports = {
 	},
 	output: {
 		filename: 'public/dist/bundle.js',
-		sourceMapFilename: 'public/dist/bundle.app.js'
+		sourceMapFilename: 'public/dist/bundle.map.js'
 	},
 	devtool: '#source-map',
 	module: {
 		loaders: [
-		    {
-		    	loader: 'babel-loader',
-		    	test: /\.js?$/,
-		    	exclude: /(node_module)/,
-		    	query: {
-		    		presets: ['react', 'es2015']
-		    	}
-		    }
+			{
+				loader: 'babel-loader',
+				test: /\.js?$/,
+				exclude: /(node_modules)/,
+				query: {
+					presets: ['react', 'es2015']
+				}
+			}
 		]
 	}
 }
