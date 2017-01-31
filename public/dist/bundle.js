@@ -21722,9 +21722,9 @@ var App = function (_Component) {
 	}]);
 
 	return App;
-}(Component);
+}(_react.Component);
 
-ReactDom.render(_react2.default.createElement(App, null), document.getElement('root'));
+_reactDom2.default.render(_react2.default.createElement(App, null), document.getElementById('root'));
 
 /***/ })
 /******/ ]);
