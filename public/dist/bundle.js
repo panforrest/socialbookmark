@@ -9483,9 +9483,7 @@ var _react = __webpack_require__(31);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _superagent = __webpack_require__(184);
-
-var _superagent2 = _interopRequireDefault(_superagent);
+var _utils = __webpack_require__(190);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -9494,6 +9492,8 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+// import superagent from 'superagent'
+
 
 var Profiles = function (_Component) {
     _inherits(Profiles, _Component);
@@ -9509,14 +9509,8 @@ var Profiles = function (_Component) {
         value: function componentDidMount() {
             console.log('componentDidMount: ');
 
-            _superagent2.default.get('/api/profile').query(null).set('Accept', 'application/json').end(function (err, response) {
-                if (err) {
-                    var msg = err.message || err;
-                    alert(msg);
-                    return;
-                }
-
-                console.log(JSON.stringify(response.body));
+            _utils.APIManager.get('/api/profile', null, function (err, response) {
+                console.log(JSON.stringify(response));
             });
         }
     }, {
@@ -23868,6 +23862,62 @@ exports.cleanHeader = function(header, shouldStripCookie){
     delete header['cookie'];
   }
   return header;
+};
+
+/***/ }),
+/* 190 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports.APIManager = undefined;
+
+var _APIManager = __webpack_require__(191);
+
+var _APIManager2 = _interopRequireDefault(_APIManager);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+exports.APIManager = _APIManager2.default;
+
+/***/ }),
+/* 191 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+       value: true
+});
+
+var _superagent = __webpack_require__(184);
+
+var _superagent2 = _interopRequireDefault(_superagent);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+exports.default = {
+
+       get: function get(endpoint, params, callback) {
+
+              _superagent2.default.get('/api/profile').query(params).set('Accept', 'application/json').end(function (err, response) {
+                     if (err) {
+                            // const msg = err.message || err
+                            // alert(msg)
+                            callback(err, null);
+                            return;
+                     }
+
+                     // console.log(JSON.stringify(response.body))
+                     callback(null, response.body);
+              });
+       }
+
 };
 
 /***/ })
