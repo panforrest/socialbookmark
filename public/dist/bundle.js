@@ -23959,7 +23959,7 @@ exports.default = {
 
 
 Object.defineProperty(exports, "__esModule", {
-	value: true
+    value: true
 });
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
@@ -23977,26 +23977,72 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
 var Signup = function (_Component) {
-	_inherits(Signup, _Component);
+    _inherits(Signup, _Component);
 
-	function Signup() {
-		_classCallCheck(this, Signup);
+    function Signup() {
+        _classCallCheck(this, Signup);
 
-		return _possibleConstructorReturn(this, (Signup.__proto__ || Object.getPrototypeOf(Signup)).apply(this, arguments));
-	}
+        var _this = _possibleConstructorReturn(this, (Signup.__proto__ || Object.getPrototypeOf(Signup)).call(this));
 
-	_createClass(Signup, [{
-		key: 'render',
-		value: function render() {
-			return _react2.default.createElement(
-				'div',
-				null,
-				'Signup Component'
-			);
-		}
-	}]);
+        _this.state = {
+            visitor: {
+                firstName: '',
+                lastName: '',
+                email: '',
+                password: ''
+            }
+        };
+        return _this;
+    }
 
-	return Signup;
+    _createClass(Signup, [{
+        key: 'updateVisitor',
+        value: function updateVisitor(event) {
+            var updated = Object.assign({}, this.state.visitor);
+            updated[event.target.id] = event.target.value;
+            this.setState({
+                visitor: updated
+            });
+        }
+    }, {
+        key: 'register',
+        value: function register(event) {
+            event.preventDefault();
+            console.log(JSON.stringify(this.state.visitor));
+        }
+    }, {
+        key: 'render',
+        value: function render() {
+            return _react2.default.createElement(
+                'div',
+                null,
+                _react2.default.createElement(
+                    'h2',
+                    null,
+                    'Sign Up'
+                ),
+                _react2.default.createElement(
+                    'div',
+                    null,
+                    _react2.default.createElement('input', { onChange: this.updateVisitor.bind(this), type: 'text', id: 'firstName', placeholder: 'First Name' }),
+                    _react2.default.createElement('br', null),
+                    _react2.default.createElement('input', { onChange: this.updateVisitor.bind(this), type: 'text', id: 'lastName', placeholder: 'Last Name' }),
+                    _react2.default.createElement('br', null),
+                    _react2.default.createElement('input', { onChange: this.updateVisitor.bind(this), type: 'text', id: 'email', placeholder: 'Email' }),
+                    _react2.default.createElement('br', null),
+                    _react2.default.createElement('input', { onChange: this.updateVisitor.bind(this), type: 'text', id: 'password', placeholder: 'Password' }),
+                    _react2.default.createElement('br', null),
+                    _react2.default.createElement(
+                        'button',
+                        { onClick: this.register.bind(this) },
+                        'Join'
+                    )
+                )
+            );
+        }
+    }]);
+
+    return Signup;
 }(_react.Component);
 
 exports.default = Signup;
