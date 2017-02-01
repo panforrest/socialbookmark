@@ -1,9 +1,9 @@
 import Profiles from './Profiles'
-// import Signup from './Signup'
+import Signup from './Signup'
 
 export {
 
-	Profiles
-	// Signup
+	Profiles,
+	Signup
 	
 }

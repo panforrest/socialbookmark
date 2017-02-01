@@ -34,6 +34,7 @@ class Profiles extends Component {
 
 		return (
             <div>
+                <h2>Profile</h2>
                 <ol>
                     {list}
                 </ol> 
