@@ -9474,7 +9474,7 @@ module.exports = __webpack_require__(112);
 
 
 Object.defineProperty(exports, "__esModule", {
-    value: true
+  value: true
 });
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
@@ -9496,35 +9496,58 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 
 var Profiles = function (_Component) {
-    _inherits(Profiles, _Component);
+  _inherits(Profiles, _Component);
 
-    function Profiles() {
-        _classCallCheck(this, Profiles);
+  function Profiles() {
+    _classCallCheck(this, Profiles);
 
-        return _possibleConstructorReturn(this, (Profiles.__proto__ || Object.getPrototypeOf(Profiles)).apply(this, arguments));
+    var _this = _possibleConstructorReturn(this, (Profiles.__proto__ || Object.getPrototypeOf(Profiles)).call(this));
+
+    _this.state = {
+      profiles: []
+    };
+    return _this;
+  }
+
+  _createClass(Profiles, [{
+    key: 'componentDidMount',
+    value: function componentDidMount() {
+      var _this2 = this;
+
+      // console.log('componentDidMount: ')
+
+      _utils.APIManager.get('/api/profile', null, function (err, response) {
+        console.log(JSON.stringify(response));
+        var results = response.results;
+        _this2.setState({
+          profiles: results
+        });
+      });
     }
+  }, {
+    key: 'render',
+    value: function render() {
+      var list = this.state.profiles.map(function (profile, i) {
+        return _react2.default.createElement(
+          'li',
+          { key: profile.id },
+          profile.firstName
+        );
+      });
 
-    _createClass(Profiles, [{
-        key: 'componentDidMount',
-        value: function componentDidMount() {
-            console.log('componentDidMount: ');
+      return _react2.default.createElement(
+        'div',
+        null,
+        _react2.default.createElement(
+          'ol',
+          null,
+          list
+        )
+      );
+    }
+  }]);
 
-            _utils.APIManager.get('/api/profile', null, function (err, response) {
-                console.log(JSON.stringify(response));
-            });
-        }
-    }, {
-        key: 'render',
-        value: function render() {
-            return _react2.default.createElement(
-                'div',
-                null,
-                'Profiles container'
-            );
-        }
-    }]);
-
-    return Profiles;
+  return Profiles;
 }(_react.Component);
 
 exports.default = Profiles;
