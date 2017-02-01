@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import { APIManager } from '../../utils'
 
 class Signup extends Component {
     constructor(){
@@ -24,6 +25,16 @@ class Signup extends Component {
     register(event){
     	event.preventDefault()
     	console.log(JSON.stringify(this.state.visitor))
+
+    	APIManager.post('/api/profile', this.state.visitor, (err, response) => {
+    		if (err){
+    			let msg = err.message || err
+    			alert(msg)
+    			return
+    		}
+
+    		console.log('REGISTER: '+JSON.stringify(response))
+    	})
     }
 
 	render() {

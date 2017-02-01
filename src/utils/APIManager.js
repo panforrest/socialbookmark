@@ -5,7 +5,7 @@ export default {
     get: (endpoint, params, callback) => {
     
 	    superagent
-        .get('/api/profile')
+        .get(endpoint)
         .query(params)
         .set('Accept', 'application/json')
         .end((err, response) => {
@@ -19,6 +19,21 @@ export default {
         	// console.log(JSON.stringify(response.body))
         	callback(null, response.body)
         })
-	}
+	},
+
+    post: (endpoint, params, callback) => {
+        superagent
+        .post(endpoint)
+        .send(params)
+        .set('Accept', 'application/json')
+        .end((err, response) => {
+            if (err){
+                callback(err, null)
+                return
+            }
+
+            callback(null, response.body)
+        })        
+    }
 
 }

@@ -23923,7 +23923,7 @@ exports.APIManager = _APIManager2.default;
 
 
 Object.defineProperty(exports, "__esModule", {
-       value: true
+    value: true
 });
 
 var _superagent = __webpack_require__(184);
@@ -23934,20 +23934,31 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 exports.default = {
 
-       get: function get(endpoint, params, callback) {
+    get: function get(endpoint, params, callback) {
 
-              _superagent2.default.get('/api/profile').query(params).set('Accept', 'application/json').end(function (err, response) {
-                     if (err) {
-                            // const msg = err.message || err
-                            // alert(msg)
-                            callback(err, null);
-                            return;
-                     }
+        _superagent2.default.get(endpoint).query(params).set('Accept', 'application/json').end(function (err, response) {
+            if (err) {
+                // const msg = err.message || err
+                // alert(msg)
+                callback(err, null);
+                return;
+            }
 
-                     // console.log(JSON.stringify(response.body))
-                     callback(null, response.body);
-              });
-       }
+            // console.log(JSON.stringify(response.body))
+            callback(null, response.body);
+        });
+    },
+
+    post: function post(endpoint, params, callback) {
+        _superagent2.default.post(endpoint).send(params).set('Accept', 'application/json').end(function (err, response) {
+            if (err) {
+                callback(err, null);
+                return;
+            }
+
+            callback(null, response.body);
+        });
+    }
 
 };
 
@@ -23967,6 +23978,8 @@ var _createClass = function () { function defineProperties(target, props) { for 
 var _react = __webpack_require__(31);
 
 var _react2 = _interopRequireDefault(_react);
+
+var _utils = __webpack_require__(190);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -24009,6 +24022,16 @@ var Signup = function (_Component) {
         value: function register(event) {
             event.preventDefault();
             console.log(JSON.stringify(this.state.visitor));
+
+            _utils.APIManager.post('/api/profile', this.state.visitor, function (err, response) {
+                if (err) {
+                    var msg = err.message || err;
+                    alert(msg);
+                    return;
+                }
+
+                console.log('REGISTER: ' + JSON.stringify(response));
+            });
         }
     }, {
         key: 'render',
