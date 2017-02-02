@@ -3,35 +3,33 @@ var router = express.Router()
 var controllers = require('../controllers')
 
 router.get('/:resource', function(req, res, next){
-
-	var resource = req.params.resource
-
-	var controller = controllers[resource]
+    var resource = req.params.resource
+    var controller = controllers[resource]
     if (controller == null){
         res.json({
-        	confirmation: 'fail',
-        	message: 'Invalid Resource'
+            confirmation: 'fail',
+            message: 'Invalid Resource'
         })
         return
     }
 
     controller.find(req.query, false)
     .then(function(entities){
-    	res.json({
-    		confirmation: 'success',
-    		results: entities
-    	})
+        res.json({
+            confirmation: 'success',
+            results: entities
+        })
     })
     .catch(function(err){
-    	res.json({
-    		confirmation: 'fail',
-    		message: err
-    	})
+        res.json({
+            confirmation: 'fail',
+            message: err
+        })
     })
-
 })
 
 router.get('/:resource/:id', function(req, res, next){
+
     var resource = req.params.resource
     var controller = controllers[resource]
     if (controller == null){
@@ -49,20 +47,17 @@ router.get('/:resource/:id', function(req, res, next){
             confirmation: 'success',
             result: result
         })
-
     })
     .catch(function(err){
         res.json({
             confirmation: 'fail',
-            message: resource+' '+id+' not found' //err
+            message: resource+' '+id+' not found'
         })
     })
-
 })
 
 router.post('/:resource', function(req, res, next){
     var resource = req.params.resource
-
     var controller = controllers[resource]
     if (controller == null){
         res.json({
@@ -78,7 +73,6 @@ router.post('/:resource', function(req, res, next){
             confirmation: 'success',
             result: result
         })
-
     })
     .catch(function(err){
         res.json({
@@ -88,4 +82,5 @@ router.post('/:resource', function(req, res, next){
     })
 })
 
-module.exports = router;
+
+module.exports = router

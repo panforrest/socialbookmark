@@ -1,6 +1,6 @@
 var Profile = require('../models/Profile')
 var Promise = require('bluebird')
-var bcrypt = require('bcrypt')
+var bcrypt = require('bcryptjs')
 
 module.exports = {
 
@@ -53,7 +53,7 @@ module.exports = {
     				return
     			}
 
-    			resolve(profile)
+    			resolve(profile.summary())
     		})
     	})
     }

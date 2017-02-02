@@ -7,11 +7,11 @@ import { Provider } from 'react-redux'
 class App extends Component {
 	render(){
 		return (
-			<Provider store={store.configureStore()}>
+			<Provider store={ store.configureStore() }>
 				<div className="container">
-	                <Home />
-	            </div>
-	        </Provider>    
+					<Home />
+				</div>
+			</Provider>
 		)
 	}
 }

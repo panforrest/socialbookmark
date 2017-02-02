@@ -21674,8 +21674,6 @@
 	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 	
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-	// import superagent from 'superagent'
-	
 	
 	var Profiles = function (_Component) {
 	    _inherits(Profiles, _Component);
@@ -21696,24 +21694,17 @@
 	        value: function componentDidMount() {
 	            var _this2 = this;
 	
-	            // console.log('componentDidMount: ')
-	
 	            _utils.APIManager.get('/api/profile', null, function (err, response) {
 	                console.log(JSON.stringify(response));
 	                var results = response.results;
 	
 	                _this2.props.profilesReceived(results);
-	
-	                // this.setState({
-	                // 	profiles: results
-	                // })
 	            });
 	        }
 	    }, {
 	        key: 'render',
 	        value: function render() {
 	            var list = this.props.profiles.map(function (profile, i) {
-	                //state is changed to props
 	                return _react2.default.createElement(
 	                    'li',
 	                    { key: profile.id },
@@ -21795,7 +21786,6 @@
 	exports.default = {
 	
 	    get: function get(endpoint, params, callback) {
-	
 	        _superagent2.default.get(endpoint).query(params).set('Accept', 'application/json').end(function (err, response) {
 	            if (err) {
 	                // const msg = err.message || err
@@ -21804,7 +21794,7 @@
 	                return;
 	            }
 	
-	            // console.log(JSON.stringify(response.body))
+	            //          console.log(JSON.stringify(response.body))
 	            callback(null, response.body);
 	        });
 	    },

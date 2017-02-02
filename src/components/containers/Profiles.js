@@ -1,56 +1,46 @@
 import React, { Component } from 'react'
-// import superagent from 'superagent'
 import { APIManager } from '../../utils'
 import actions from '../../actions'
 import { connect } from 'react-redux'
 
-
 class Profiles extends Component {
-
-	constructor(){
-		super()
-		this.state = {
-			profiles:[]
-		}
-	}
+    constructor(){
+        super()
+        this.state = {
+            profiles: []
+        }
+    }
 
     componentDidMount(){
-    	// console.log('componentDidMount: ')
-
         APIManager.get('/api/profile', null, (err, response) => {
-        	console.log(JSON.stringify(response))
-        	const results = response.results
+            console.log(JSON.stringify(response))
+            const results = response.results
 
             this.props.profilesReceived(results)
-
-        	// this.setState({
-        	// 	profiles: results
-        	// })
         })
     }
 
-
-	render(){
-        const list = this.props.profiles.map((profile, i) => {   //state is changed to props
-        	return (
+    render(){
+        const list = this.props.profiles.map((profile, i) => {
+            return (
                 <li key={profile.id}>{ profile.firstName }</li>
-        	)
-        }) 
+            )
+        })
 
-		return (
+        return (
             <div>
                 <h2>Profiles</h2>
                 <ol>
                     {list}
-                </ol> 
+                </ol>
             </div>
-		)
-	}
+        )
+    }
 }
 
 const stateToProps = (state) => {
     return {
-        profiles: state.profile.list    
+        profiles: state.profile.list
     }
 }
 
@@ -62,3 +52,7 @@ const dispatchToProps = (dispatch) => {
 
 
 export default connect(stateToProps, dispatchToProps)(Profiles)
+
+
+
+
