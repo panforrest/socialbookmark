@@ -1,6 +1,8 @@
 import React, { Component } from 'react'
 // import superagent from 'superagent'
 import { APIManager } from '../../utils'
+import actions from '../../actions'
+import { connect } from 'react-redux'
 
 
 class Profiles extends Component {
@@ -18,9 +20,12 @@ class Profiles extends Component {
         APIManager.get('/api/profile', null, (err, response) => {
         	console.log(JSON.stringify(response))
         	const results = response.results
-        	this.setState({
-        		profiles: results
-        	})
+
+            this.props.profilesReceived(results)
+
+        	// this.setState({
+        	// 	profiles: results
+        	// })
         })
     }
 
@@ -43,4 +48,17 @@ class Profiles extends Component {
 	}
 }
 
-export default Profiles
+const stateToProps = (state) => {
+    return {
+        profiles: state.profile.list
+    }
+}
+
+const dispatchToProps = (dispatch) => {
+    return {
+        profilesReceived: (profiles) => dispatch(actions.profilesReceived(profiles))
+    }
+}
+
+
+export default connect(stateToProps, dispatchToProps)(Profiles)

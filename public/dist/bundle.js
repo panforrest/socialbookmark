@@ -112,7 +112,7 @@ var App = function (_Component) {
 		key: 'render',
 		value: function render() {
 			return _react2.default.createElement(
-				Provider,
+				_reactRedux.Provider,
 				{ store: _stores2.default.configureStore() },
 				_react2.default.createElement(
 					'div',
@@ -10566,7 +10566,7 @@ var store;
 exports.default = {
 				configureStore: function configureStore() {
 								var reducers = (0, _redux.combineReducers)({
-												profiles: _reducers.profileReducer
+												profile: _reducers.profileReducer
 								});
 
 								store = (0, _redux.createStore)(reducers, (0, _redux.applyMiddleware)(_reduxThunk2.default));
@@ -10616,7 +10616,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 
 Object.defineProperty(exports, "__esModule", {
-  value: true
+    value: true
 });
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
@@ -10626,6 +10626,12 @@ var _react = __webpack_require__(15);
 var _react2 = _interopRequireDefault(_react);
 
 var _utils = __webpack_require__(57);
+
+var _actions = __webpack_require__(237);
+
+var _actions2 = _interopRequireDefault(_actions);
+
+var _reactRedux = __webpack_require__(99);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -10638,66 +10644,83 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 
 var Profiles = function (_Component) {
-  _inherits(Profiles, _Component);
+    _inherits(Profiles, _Component);
 
-  function Profiles() {
-    _classCallCheck(this, Profiles);
+    function Profiles() {
+        _classCallCheck(this, Profiles);
 
-    var _this = _possibleConstructorReturn(this, (Profiles.__proto__ || Object.getPrototypeOf(Profiles)).call(this));
+        var _this = _possibleConstructorReturn(this, (Profiles.__proto__ || Object.getPrototypeOf(Profiles)).call(this));
 
-    _this.state = {
-      profiles: []
-    };
-    return _this;
-  }
-
-  _createClass(Profiles, [{
-    key: 'componentDidMount',
-    value: function componentDidMount() {
-      var _this2 = this;
-
-      // console.log('componentDidMount: ')
-
-      _utils.APIManager.get('/api/profile', null, function (err, response) {
-        console.log(JSON.stringify(response));
-        var results = response.results;
-        _this2.setState({
-          profiles: results
-        });
-      });
+        _this.state = {
+            profiles: []
+        };
+        return _this;
     }
-  }, {
-    key: 'render',
-    value: function render() {
-      var list = this.state.profiles.map(function (profile, i) {
-        return _react2.default.createElement(
-          'li',
-          { key: profile.id },
-          profile.firstName
-        );
-      });
 
-      return _react2.default.createElement(
-        'div',
-        null,
-        _react2.default.createElement(
-          'h2',
-          null,
-          'Profile'
-        ),
-        _react2.default.createElement(
-          'ol',
-          null,
-          list
-        )
-      );
-    }
-  }]);
+    _createClass(Profiles, [{
+        key: 'componentDidMount',
+        value: function componentDidMount() {
+            var _this2 = this;
 
-  return Profiles;
+            // console.log('componentDidMount: ')
+
+            _utils.APIManager.get('/api/profile', null, function (err, response) {
+                console.log(JSON.stringify(response));
+                var results = response.results;
+
+                _this2.props.profilesReceived(results);
+
+                // this.setState({
+                // 	profiles: results
+                // })
+            });
+        }
+    }, {
+        key: 'render',
+        value: function render() {
+            var list = this.state.profiles.map(function (profile, i) {
+                return _react2.default.createElement(
+                    'li',
+                    { key: profile.id },
+                    profile.firstName
+                );
+            });
+
+            return _react2.default.createElement(
+                'div',
+                null,
+                _react2.default.createElement(
+                    'h2',
+                    null,
+                    'Profile'
+                ),
+                _react2.default.createElement(
+                    'ol',
+                    null,
+                    list
+                )
+            );
+        }
+    }]);
+
+    return Profiles;
 }(_react.Component);
 
-exports.default = Profiles;
+var stateToProps = function stateToProps(state) {
+    return {
+        profiles: state.profile.list
+    };
+};
+
+var dispatchToProps = function dispatchToProps(dispatch) {
+    return {
+        profilesReceived: function profilesReceived(profiles) {
+            return dispatch(_actions2.default.profilesReceived(profiles));
+        }
+    };
+};
+
+exports.default = (0, _reactRedux.connect)(stateToProps, dispatchToProps)(Profiles);
 
 /***/ }),
 /* 101 */
@@ -10961,7 +10984,7 @@ exports.default = function () {
 
 
     switch (action.type) {
-        case constatns.PROFILE_RECEIVED:
+        case _constants2.default.PROFILES_RECEIVED:
             console.log('PROFILES_RECEIVED: ' + JSON.stringify(action.profiles));
 
             return state;
@@ -26381,6 +26404,33 @@ module.exports = function(module) {
 	return module;
 };
 
+
+/***/ }),
+/* 237 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _constants = __webpack_require__(104);
+
+var _constants2 = _interopRequireDefault(_constants);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+exports.default = {
+
+    profilesReceived: function profilesReceived(profiles) {
+        return {
+            type: _constants2.default.PROFILES_RECEIVED,
+            profiles: profiles
+        };
+    }
+};
 
 /***/ })
 /******/ ]);

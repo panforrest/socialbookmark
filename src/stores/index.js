@@ -7,7 +7,7 @@ var store;
 export default {
     configureStore: () => {
 	    const reducers = combineReducers({
-	    	profiles: profileReducer
+	    	profile: profileReducer
 	    })
 
 	    store = createStore(
