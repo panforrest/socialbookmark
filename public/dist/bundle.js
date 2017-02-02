@@ -26130,7 +26130,7 @@
 	                }
 	
 	                console.log('REGISTER: ' + JSON.stringify(response));
-	                _this2.props.profileCreated(response.result);
+	                _this2.props.profileCreated(response.profile);
 	            });
 	        }
 	    }, {

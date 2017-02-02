@@ -36,7 +36,7 @@ class Signup extends Component {
             }
 
             console.log('REGISTER: '+JSON.stringify(response))
-            this.props.profileCreated(response.result)
+            this.props.profileCreated(response.profile)
         })
     }
 
