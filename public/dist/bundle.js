@@ -26136,9 +26136,17 @@
 	    }, {
 	        key: 'render',
 	        value: function render() {
+	            var greeting = this.props.currentUser == null ? null : _react2.default.createElement(
+	                'h2',
+	                null,
+	                'Welcome ',
+	                this.props.currentUser.firstName
+	            );
+	
 	            return _react2.default.createElement(
 	                'div',
 	                null,
+	                greeting,
 	                _react2.default.createElement(
 	                    'h2',
 	                    null,
@@ -26166,7 +26174,8 @@
 	
 	var stateToProps = function stateToProps(state) {
 	    return {
-	        profiles: state.profile.list
+	        profiles: state.profile.list,
+	        currentUser: state.account.currentUser
 	    };
 	};
 	
@@ -26205,7 +26214,8 @@
 	exports.default = {
 					configureStore: function configureStore() {
 									var reducers = (0, _redux.combineReducers)({
-													profile: _reducers.profileReducer
+													profile: _reducers.profileReducer,
+													account: _reducers.accountReducer
 									});
 	
 									store = (0, _redux.createStore)(reducers, (0, _redux.applyMiddleware)(_reduxThunk2.default));
@@ -26256,15 +26266,20 @@
 	Object.defineProperty(exports, "__esModule", {
 	    value: true
 	});
-	exports.profileReducer = undefined;
+	exports.accountReducer = exports.profileReducer = undefined;
 	
 	var _profileReducer = __webpack_require__(236);
 	
 	var _profileReducer2 = _interopRequireDefault(_profileReducer);
 	
+	var _accountReducer = __webpack_require__(237);
+	
+	var _accountReducer2 = _interopRequireDefault(_accountReducer);
+	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	exports.profileReducer = _profileReducer2.default;
+	exports.accountReducer = _accountReducer2.default;
 
 /***/ },
 /* 236 */
@@ -26305,6 +26320,42 @@
 				updatedList.push(action.profile);
 				updated['list'] = updatedList;
 	
+				return updated;
+	
+			default:
+				return state;
+		}
+	};
+
+/***/ },
+/* 237 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+	
+	var _constants = __webpack_require__(193);
+	
+	var _constants2 = _interopRequireDefault(_constants);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	var initialState = {
+		currentUser: null
+	};
+	
+	exports.default = function () {
+		var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : initialState;
+		var action = arguments[1];
+	
+		var updated = Object.assign({}, state);
+	
+		switch (action.type) {
+			case _constants2.default.PROFILE_CREATED:
+				updated['currentUser'] = action.profile;
 				return updated;
 	
 			default:

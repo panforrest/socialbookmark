@@ -41,8 +41,12 @@ class Signup extends Component {
     }
 
     render(){
+        const greeting = (this.props.currentUser == null) ? null : <h2>Welcome {this.props.currentUser.firstName}</h2>
+
+
         return (
             <div>
+                { greeting }
                 <h2>Sign Up</h2>
                 <input onChange={this.updateVisitor.bind(this)} type="text" id="firstName" placeholder="First Name" /><br />
                 <input onChange={this.updateVisitor.bind(this)} type="text" id="lastName" placeholder="Last Name" /><br />
@@ -56,7 +60,8 @@ class Signup extends Component {
 
 const stateToProps = (state) => {
     return {
-        profiles: state.profile.list
+        profiles: state.profile.list,
+        currentUser: state.account.currentUser
     }
 }
 
