@@ -10678,7 +10678,8 @@ var Profiles = function (_Component) {
     }, {
         key: 'render',
         value: function render() {
-            var list = this.state.profiles.map(function (profile, i) {
+            var list = this.props.profiles.map(function (profile, i) {
+                //state is changed to props
                 return _react2.default.createElement(
                     'li',
                     { key: profile.id },
@@ -10965,7 +10966,7 @@ exports.profileReducer = _profileReducer2.default;
 
 
 Object.defineProperty(exports, "__esModule", {
-    value: true
+  value: true
 });
 
 var _constants = __webpack_require__(104);
@@ -10975,23 +10976,25 @@ var _constants2 = _interopRequireDefault(_constants);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var initialState = {
-    list: [] //store all profiles in an arraty
+  list: [] //store all profiles in an arraty
 };
 
 exports.default = function () {
-    var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : initialState;
-    var action = arguments[1];
+  var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : initialState;
+  var action = arguments[1];
 
+  var updated = Object.assign({}, state);
 
-    switch (action.type) {
-        case _constants2.default.PROFILES_RECEIVED:
-            console.log('PROFILES_RECEIVED: ' + JSON.stringify(action.profiles));
+  switch (action.type) {
+    case _constants2.default.PROFILES_RECEIVED:
+      console.log('PROFILES_RECEIVED: ' + JSON.stringify(action.profiles));
+      updated['list'] = action.profiles;
 
-            return state;
+      return updated;
 
-        default:
-            return state;
-    }
+    default:
+      return state;
+  }
 };
 
 /***/ }),

@@ -31,7 +31,7 @@ class Profiles extends Component {
 
 
 	render(){
-        const list = this.state.profiles.map((profile, i) => {
+        const list = this.props.profiles.map((profile, i) => {   //state is changed to props
         	return (
                 <li key={profile.id}>{ profile.firstName }</li>
         	)
@@ -50,7 +50,7 @@ class Profiles extends Component {
 
 const stateToProps = (state) => {
     return {
-        profiles: state.profile.list
+        profiles: state.profile.list    
     }
 }
 
