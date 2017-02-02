@@ -26136,34 +26136,36 @@
 	    }, {
 	        key: 'render',
 	        value: function render() {
-	            var greeting = this.props.currentUser == null ? null : _react2.default.createElement(
-	                'h2',
-	                null,
-	                'Welcome ',
-	                this.props.currentUser.firstName
-	            );
 	
 	            return _react2.default.createElement(
 	                'div',
 	                null,
-	                greeting,
-	                _react2.default.createElement(
+	                this.props.currentUser != null ? _react2.default.createElement(
 	                    'h2',
 	                    null,
-	                    'Sign Up'
-	                ),
-	                _react2.default.createElement('input', { onChange: this.updateVisitor.bind(this), type: 'text', id: 'firstName', placeholder: 'First Name' }),
-	                _react2.default.createElement('br', null),
-	                _react2.default.createElement('input', { onChange: this.updateVisitor.bind(this), type: 'text', id: 'lastName', placeholder: 'Last Name' }),
-	                _react2.default.createElement('br', null),
-	                _react2.default.createElement('input', { onChange: this.updateVisitor.bind(this), type: 'text', id: 'email', placeholder: 'Email' }),
-	                _react2.default.createElement('br', null),
-	                _react2.default.createElement('input', { onChange: this.updateVisitor.bind(this), type: 'text', id: 'password', placeholder: 'Password' }),
-	                _react2.default.createElement('br', null),
-	                _react2.default.createElement(
-	                    'button',
-	                    { onClick: this.register.bind(this) },
-	                    'Join'
+	                    'Welcome ',
+	                    this.props.currentUser.firstName
+	                ) : _react2.default.createElement(
+	                    'div',
+	                    null,
+	                    _react2.default.createElement(
+	                        'h2',
+	                        null,
+	                        'Sign Up'
+	                    ),
+	                    _react2.default.createElement('input', { onChange: this.updateVisitor.bind(this), type: 'text', id: 'firstName', placeholder: 'First Name' }),
+	                    _react2.default.createElement('br', null),
+	                    _react2.default.createElement('input', { onChange: this.updateVisitor.bind(this), type: 'text', id: 'lastName', placeholder: 'Last Name' }),
+	                    _react2.default.createElement('br', null),
+	                    _react2.default.createElement('input', { onChange: this.updateVisitor.bind(this), type: 'text', id: 'email', placeholder: 'Email' }),
+	                    _react2.default.createElement('br', null),
+	                    _react2.default.createElement('input', { onChange: this.updateVisitor.bind(this), type: 'text', id: 'password', placeholder: 'Password' }),
+	                    _react2.default.createElement('br', null),
+	                    _react2.default.createElement(
+	                        'button',
+	                        { onClick: this.register.bind(this) },
+	                        'Join'
+	                    )
 	                )
 	            );
 	        }

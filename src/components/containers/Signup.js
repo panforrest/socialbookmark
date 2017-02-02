@@ -41,18 +41,19 @@ class Signup extends Component {
     }
 
     render(){
-        const greeting = (this.props.currentUser == null) ? null : <h2>Welcome {this.props.currentUser.firstName}</h2>
-
 
         return (
             <div>
-                { greeting }
-                <h2>Sign Up</h2>
-                <input onChange={this.updateVisitor.bind(this)} type="text" id="firstName" placeholder="First Name" /><br />
-                <input onChange={this.updateVisitor.bind(this)} type="text" id="lastName" placeholder="Last Name" /><br />
-                <input onChange={this.updateVisitor.bind(this)} type="text" id="email" placeholder="Email" /><br />
-                <input onChange={this.updateVisitor.bind(this)} type="text" id="password" placeholder="Password" /><br />
-                <button onClick={this.register.bind(this)}>Join</button>
+                {(this.props.currentUser != null) ? <h2>Welcome {this.props.currentUser.firstName}</h2>:
+                    <div>
+                        <h2>Sign Up</h2>
+                        <input onChange={this.updateVisitor.bind(this)} type="text" id="firstName" placeholder="First Name" /><br />
+                        <input onChange={this.updateVisitor.bind(this)} type="text" id="lastName" placeholder="Last Name" /><br />
+                        <input onChange={this.updateVisitor.bind(this)} type="text" id="email" placeholder="Email" /><br />
+                        <input onChange={this.updateVisitor.bind(this)} type="text" id="password" placeholder="Password" /><br />
+                        <button onClick={this.register.bind(this)}>Join</button>
+                    </div> 
+                }       
             </div>
         )
     }
