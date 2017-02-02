@@ -28,7 +28,7 @@ class Signup extends Component {
         event.preventDefault()
         // console.log(JSON.stringify(this.state.visitor))
 
-        APIManager.post('/api/profile', this.state.visitor, (err, response) => {
+        APIManager.post('/account/register', this.state.visitor, (err, response) => {
             if (err){
                 let msg = err.message || err
                 alert(msg)

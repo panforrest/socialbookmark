@@ -26122,7 +26122,7 @@
 	            event.preventDefault();
 	            // console.log(JSON.stringify(this.state.visitor))
 	
-	            _utils.APIManager.post('/api/profile', this.state.visitor, function (err, response) {
+	            _utils.APIManager.post('/account/register', this.state.visitor, function (err, response) {
 	                if (err) {
 	                    var msg = err.message || err;
 	                    alert(msg);
