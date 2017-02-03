@@ -16,6 +16,23 @@ class Signup extends Component {
         }
     }
 
+    componentDidMount(){
+        //check the current user
+        APIManager.get('/account/currentuser', null, (err, response) => {
+            if (err) {
+                alert(err)
+                return
+            }
+            
+            if (response.profile == null)
+                return
+
+            //user is logged in:
+            console.log('Current User: '+JSON.stringify(response))
+            this.props.currentUserReceived(response.profile)
+        })
+    }
+
     updateVisitor(event){
         let updated = Object.assign({}, this.state.visitor)
         updated[event.target.id] = event.target.value
@@ -68,7 +85,8 @@ const stateToProps = (state) => {
 
 const dispatchToProps = (dispatch) => {
     return {
-        profileCreated: (profile) => dispatch(actions.profileCreated(profile))
+        profileCreated: (profile) => dispatch(actions.profileCreated(profile)),
+        currentUserReceived: (profile) => dispatch(actions.currentUserReceived(profile))
     }
 }
 

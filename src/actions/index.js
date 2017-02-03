@@ -1,6 +1,12 @@
 import constants from '../constants'
 
 export default {
+    currentUserReceived: (profile) => {
+        return {
+            type: constants.CURRENT_USER_RECEIVED,
+            profile: profile
+        }
+    },
 
     profilesReceived: (profiles) => {
     	return {

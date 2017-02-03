@@ -23794,6 +23794,12 @@
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	exports.default = {
+	    currentUserReceived: function currentUserReceived(profile) {
+	        return {
+	            type: _constants2.default.CURRENT_USER_RECEIVED,
+	            profile: profile
+	        };
+	    },
 	
 	    profilesReceived: function profilesReceived(profiles) {
 	        return {
@@ -23821,6 +23827,7 @@
 	});
 	exports.default = {
 	
+	    CURRENT_USER_RECEIVED: 'CURRENT_USER_RECEIVED',
 	    PROFILES_RECEIVED: 'PROFILES_RECEIVED',
 	    PROFILE_CREATED: 'PROFILE_CREATED'
 	
@@ -26106,6 +26113,25 @@
 	    }
 	
 	    _createClass(Signup, [{
+	        key: 'componentDidMount',
+	        value: function componentDidMount() {
+	            var _this2 = this;
+	
+	            //check the current user
+	            _utils.APIManager.get('/account/currentuser', null, function (err, response) {
+	                if (err) {
+	                    alert(err);
+	                    return;
+	                }
+	
+	                if (response.profile == null) return;
+	
+	                //user is logged in:
+	                console.log('Current User: ' + JSON.stringify(response));
+	                _this2.props.currentUserReceived(response.profile);
+	            });
+	        }
+	    }, {
 	        key: 'updateVisitor',
 	        value: function updateVisitor(event) {
 	            var updated = Object.assign({}, this.state.visitor);
@@ -26117,7 +26143,7 @@
 	    }, {
 	        key: 'register',
 	        value: function register(event) {
-	            var _this2 = this;
+	            var _this3 = this;
 	
 	            event.preventDefault();
 	            // console.log(JSON.stringify(this.state.visitor))
@@ -26130,7 +26156,7 @@
 	                }
 	
 	                console.log('REGISTER: ' + JSON.stringify(response));
-	                _this2.props.profileCreated(response.profile);
+	                _this3.props.profileCreated(response.profile);
 	            });
 	        }
 	    }, {
@@ -26185,6 +26211,9 @@
 	    return {
 	        profileCreated: function profileCreated(profile) {
 	            return dispatch(_actions2.default.profileCreated(profile));
+	        },
+	        currentUserReceived: function currentUserReceived(profile) {
+	            return dispatch(_actions2.default.currentUserReceived(profile));
 	        }
 	    };
 	};
@@ -26357,6 +26386,10 @@
 	
 		switch (action.type) {
 			case _constants2.default.PROFILE_CREATED:
+				updated['currentUser'] = action.profile;
+				return updated;
+	
+			case _constants2.default.CURRENT_USER_RECEIVED:
 				updated['currentUser'] = action.profile;
 				return updated;
 	
