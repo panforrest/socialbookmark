@@ -21794,7 +21794,13 @@
 	                return;
 	            }
 	
-	            //          console.log(JSON.stringify(response.body))
+	            console.log('API MANAGER: ' + JSON.stringify(response.body));
+	            var confirmation = response.body.confirmation;
+	            if (confirmation != 'success') {
+	                callback({ message: response.body.message }, null);
+	                return;
+	            }
+	
 	            callback(null, response.body);
 	        });
 	    },
@@ -21803,6 +21809,13 @@
 	        _superagent2.default.post(endpoint).send(params).set('Accept', 'application/json').end(function (err, response) {
 	            if (err) {
 	                callback(err, null);
+	                return;
+	            }
+	
+	            console.log('API MANAGER: ' + JSON.stringify(response.body));
+	            var confirmation = response.body.confirmation;
+	            if (confirmation != 'success') {
+	                callback({ message: response.body.message }, null);
 	                return;
 	            }
 	
@@ -26160,6 +26173,25 @@
 	            });
 	        }
 	    }, {
+	        key: 'login',
+	        value: function login(event) {
+	            var _this4 = this;
+	
+	            event.preventDefault();
+	            // console.log(JSON.stringify(this.state.visitor))
+	
+	            _utils.APIManager.post('/account/login', this.state.visitor, function (err, response) {
+	                if (err) {
+	                    var msg = err.message || err;
+	                    alert(msg);
+	                    return;
+	                }
+	
+	                console.log('Login: ' + JSON.stringify(response));
+	                _this4.props.currentUserReceived(response.profile);
+	            });
+	        }
+	    }, {
 	        key: 'render',
 	        value: function render() {
 	
@@ -26191,6 +26223,20 @@
 	                        'button',
 	                        { onClick: this.register.bind(this) },
 	                        'Join'
+	                    ),
+	                    _react2.default.createElement(
+	                        'h2',
+	                        null,
+	                        'Log In'
+	                    ),
+	                    _react2.default.createElement('input', { onChange: this.updateVisitor.bind(this), type: 'text', id: 'email', placeholder: 'Email' }),
+	                    _react2.default.createElement('br', null),
+	                    _react2.default.createElement('input', { onChange: this.updateVisitor.bind(this), type: 'text', id: 'password', placeholder: 'Password' }),
+	                    _react2.default.createElement('br', null),
+	                    _react2.default.createElement(
+	                        'button',
+	                        { onClick: this.login.bind(this) },
+	                        'Log In'
 	                    )
 	                )
 	            );

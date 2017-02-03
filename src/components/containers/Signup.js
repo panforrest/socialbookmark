@@ -57,6 +57,22 @@ class Signup extends Component {
         })
     }
 
+    login(event){
+        event.preventDefault()
+        // console.log(JSON.stringify(this.state.visitor))
+
+        APIManager.post('/account/login', this.state.visitor, (err, response) => {
+            if (err){
+                let msg = err.message || err
+                alert(msg)
+                return
+            }
+
+            console.log('Login: '+JSON.stringify(response))
+            this.props.currentUserReceived(response.profile)
+        })
+    }
+
     render(){
 
         return (
@@ -69,6 +85,11 @@ class Signup extends Component {
                         <input onChange={this.updateVisitor.bind(this)} type="text" id="email" placeholder="Email" /><br />
                         <input onChange={this.updateVisitor.bind(this)} type="text" id="password" placeholder="Password" /><br />
                         <button onClick={this.register.bind(this)}>Join</button>
+
+                        <h2>Log In</h2>
+                        <input onChange={this.updateVisitor.bind(this)} type="text" id="email" placeholder="Email" /><br />
+                        <input onChange={this.updateVisitor.bind(this)} type="text" id="password" placeholder="Password" /><br />
+                        <button onClick={this.login.bind(this)}>Log In</button>
                     </div> 
                 }       
             </div>
