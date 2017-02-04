@@ -26602,18 +26602,28 @@
 		function Bookmarks() {
 			_classCallCheck(this, Bookmarks);
 	
-			return _possibleConstructorReturn(this, (Bookmarks.__proto__ || Object.getPrototypeOf(Bookmarks)).apply(this, arguments));
+			var _this = _possibleConstructorReturn(this, (Bookmarks.__proto__ || Object.getPrototypeOf(Bookmarks)).call(this));
+	
+			_this.state = {
+				bookmarks: []
+			};
+			return _this;
 		}
 	
 		_createClass(Bookmarks, [{
 			key: 'componentDidMount',
 			value: function componentDidMount() {
+				var _this2 = this;
+	
 				_utils.APIManager.get('/api/bookmark', null, function (err, response) {
 					if (err) {
 						return;
 					}
 	
-					console.log('Bookmarks:' + JSON.stringify(response));
+					// console.log('Bookmarks:'+JSON.stringify(response))
+					_this2.setState({
+						bookmarks: response.results
+					});
 				});
 			}
 		}, {
@@ -26622,7 +26632,22 @@
 				return _react2.default.createElement(
 					'div',
 					null,
-					'This is Bookmarks Container!'
+					_react2.default.createElement(
+						'h2',
+						null,
+						'Bookmarks'
+					),
+					_react2.default.createElement(
+						'ol',
+						null,
+						this.state.bookmarks.map(function (bookmark, i) {
+							return _react2.default.createElement(
+								'li',
+								{ key: bookmark.id },
+								bookmark.description
+							);
+						})
+					)
 				);
 			}
 		}]);

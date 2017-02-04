@@ -3,13 +3,23 @@ import { APIManager } from '../../utils'
  
 class Bookmarks extends Component {
 
+    constructor(){
+    	super()
+    	this.state = {
+    		bookmarks: []
+    	}
+    }
+
 	componentDidMount(){
 		APIManager.get('/api/bookmark', null, (err, response) => {
 			if (err){
 				return
 			}
 
-			console.log('Bookmarks:'+JSON.stringify(response))
+			// console.log('Bookmarks:'+JSON.stringify(response))
+			this.setState({
+				bookmarks: response.results
+			})
 		})
 
 		
@@ -18,8 +28,14 @@ class Bookmarks extends Component {
 	render() {
 		return (
 			<div>
-			    This is Bookmarks Container!
-
+			    <h2>Bookmarks</h2>
+			    <ol>
+			        {
+                        this.state.bookmarks.map((bookmark, i) => {
+                        	return <li key={bookmark.id}>{bookmark.description}</li>
+                        })
+			        }
+			    </ol>
 			</div>
 
 		)
