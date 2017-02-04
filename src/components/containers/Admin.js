@@ -6,6 +6,11 @@ import { Signup } from '../presentation'
 
 class Admin extends Component {
 
+    constructor(){
+        super()
+        this.state
+    }
+
     componentDidMount(){
         //check the current user
         APIManager.get('/account/currentuser', null, (err, response) => {
@@ -55,14 +60,26 @@ class Admin extends Component {
         })
     }
 
+    updateLink(event){
+        event.preventDefault()
+        this.setState({
+            link: event.target.value
+        })
+    }
+
+    submitLink(event){
+        event.preventDefault()
+        console.log('submitLink: '+this.state.link)
+    }
+
 	render(){
 		return (
             <div>
                 {(this.props.currentUser == null) ?  <Signup onRegister={this.register.bind(this)} onLogin={this.login.bind(this)}/> :
                     <div>
                         <h2>Welcome {this.props.currentUser.firstName}</h2>
-                        <input placeholder="http://www.example.com" type="text" /><br />
-                        <button>Submit Link</button>
+                        <input onChange={this.updateLink.bind(this)} placeholder="http://www.example.com" type="text" /><br />
+                        <button onClick={this.submitLink.bind(this)}>Submit Link</button>
                     </div>
                     
                    

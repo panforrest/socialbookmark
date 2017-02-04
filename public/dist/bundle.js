@@ -26114,7 +26114,10 @@
 	    function Admin() {
 	        _classCallCheck(this, Admin);
 	
-	        return _possibleConstructorReturn(this, (Admin.__proto__ || Object.getPrototypeOf(Admin)).apply(this, arguments));
+	        var _this = _possibleConstructorReturn(this, (Admin.__proto__ || Object.getPrototypeOf(Admin)).call(this));
+	
+	        _this.state;
+	        return _this;
 	    }
 	
 	    _createClass(Admin, [{
@@ -26175,6 +26178,20 @@
 	            });
 	        }
 	    }, {
+	        key: 'updateLink',
+	        value: function updateLink(event) {
+	            event.preventDefault();
+	            this.setState({
+	                link: event.target.value
+	            });
+	        }
+	    }, {
+	        key: 'submitLink',
+	        value: function submitLink(event) {
+	            event.preventDefault();
+	            console.log('submitLink: ' + this.state.link);
+	        }
+	    }, {
 	        key: 'render',
 	        value: function render() {
 	            return _react2.default.createElement(
@@ -26189,11 +26206,11 @@
 	                        'Welcome ',
 	                        this.props.currentUser.firstName
 	                    ),
-	                    _react2.default.createElement('input', { placeholder: 'http://www.example.com', type: 'text' }),
+	                    _react2.default.createElement('input', { onChange: this.updateLink.bind(this), placeholder: 'http://www.example.com', type: 'text' }),
 	                    _react2.default.createElement('br', null),
 	                    _react2.default.createElement(
 	                        'button',
-	                        null,
+	                        { onClick: this.submitLink.bind(this) },
 	                        'Submit Link'
 	                    )
 	                )
