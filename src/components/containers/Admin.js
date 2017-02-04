@@ -70,6 +70,20 @@ class Admin extends Component {
     submitLink(event){
         event.preventDefault()
         console.log('submitLink: '+this.state.link)
+
+        const bookmark = {
+            profile: this.props.currentUser.id,
+            url: this.state.link
+        }
+
+        APIManager.post('/api/bookmark', bookmark, (err, response) => {
+            if (err){
+                alert(err)
+                return
+            }
+
+            console.log('Submit Link: '+JSON.stringify(response))
+        })
     }
 
 	render(){

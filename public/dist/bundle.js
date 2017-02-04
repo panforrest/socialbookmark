@@ -26190,6 +26190,20 @@
 	        value: function submitLink(event) {
 	            event.preventDefault();
 	            console.log('submitLink: ' + this.state.link);
+	
+	            var bookmark = {
+	                profile: this.props.currentUser.id,
+	                url: this.state.link
+	            };
+	
+	            _utils.APIManager.post('/api/bookmark', bookmark, function (err, response) {
+	                if (err) {
+	                    alert(err);
+	                    return;
+	                }
+	
+	                console.log('Submit Link: ' + JSON.stringify(response));
+	            });
 	        }
 	    }, {
 	        key: 'render',
