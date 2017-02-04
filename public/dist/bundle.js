@@ -26137,6 +26137,44 @@
 	            });
 	        }
 	    }, {
+	        key: 'register',
+	        value: function register(visitor) {
+	            var _this3 = this;
+	
+	            // event.preventDefault()
+	            // console.log(JSON.stringify(this.state.visitor))
+	
+	            _utils.APIManager.post('/account/register', visitor, function (err, response) {
+	                if (err) {
+	                    var msg = err.message || err;
+	                    alert(msg);
+	                    return;
+	                }
+	
+	                console.log('REGISTER: ' + JSON.stringify(response));
+	                _this3.props.profileCreated(response.profile);
+	            });
+	        }
+	    }, {
+	        key: 'login',
+	        value: function login(credentials) {
+	            var _this4 = this;
+	
+	            // event.preventDefault()
+	            // console.log(JSON.stringify(this.state.visitor))
+	
+	            _utils.APIManager.post('/account/login', credentials, function (err, response) {
+	                if (err) {
+	                    var msg = err.message || err;
+	                    alert(msg);
+	                    return;
+	                }
+	
+	                console.log('Login: ' + JSON.stringify(response));
+	                _this4.props.currentUserReceived(response.profile);
+	            });
+	        }
+	    }, {
 	        key: 'render',
 	        value: function render() {
 	            return _react2.default.createElement(
@@ -26147,7 +26185,7 @@
 	                    null,
 	                    'Welcome ',
 	                    this.props.currentUser.firstName
-	                ) : _react2.default.createElement(_presentation.Signup, null)
+	                ) : _react2.default.createElement(_presentation.Signup, { onLogin: this.login.bind(this) })
 	            );
 	        }
 	    }]);
@@ -26435,6 +26473,7 @@
 	        key: 'login',
 	        value: function login(event) {
 	            event.preventDefault();
+	            this.props.onLogin(this.state.visitor);
 	        }
 	    }, {
 	        key: 'render',
