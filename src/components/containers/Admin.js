@@ -59,7 +59,7 @@ class Admin extends Component {
 		return (
             <div>
                 {(this.props.currentUser != null) ? <h2>Welcome {this.props.currentUser.firstName}</h2>:
-                    <Signup onLogin={this.login.bind(this)}/>
+                    <Signup onRegister={this.register.bind(this)} onLogin={this.login.bind(this)}/>
                 }       
             </div>
 		)

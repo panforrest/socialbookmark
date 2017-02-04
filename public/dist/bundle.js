@@ -26185,7 +26185,7 @@
 	                    null,
 	                    'Welcome ',
 	                    this.props.currentUser.firstName
-	                ) : _react2.default.createElement(_presentation.Signup, { onLogin: this.login.bind(this) })
+	                ) : _react2.default.createElement(_presentation.Signup, { onRegister: this.register.bind(this), onLogin: this.login.bind(this) })
 	            );
 	        }
 	    }]);
@@ -26466,8 +26466,7 @@
 	        key: 'register',
 	        value: function register(event) {
 	            event.preventDefault();
-	            // console.log(JSON.stringify(this.state.visitor))
-	
+	            this.props.onRegister(this.state.visitor);
 	        }
 	    }, {
 	        key: 'login',

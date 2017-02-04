@@ -25,7 +25,7 @@ class Signup extends Component {
 
     register(event){
         event.preventDefault()
-        // console.log(JSON.stringify(this.state.visitor))
+        this.props.onRegister(this.state.visitor)
 
 
     }
