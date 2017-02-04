@@ -15,9 +15,10 @@ export default {
                 return
             }
 
-            console.log('API MANAGER: '+JSON.stringify(response.body))
+            // console.log('API MANAGER: '+JSON.stringify(response.body))
+
             const confirmation = response.body.confirmation
-            if (confirmation != 'success') {
+            if (confirmation != 'success'){
                 callback({message: response.body.message}, null)
                 return
             }
@@ -39,7 +40,7 @@ export default {
 
             console.log('API MANAGER: '+JSON.stringify(response.body))
             const confirmation = response.body.confirmation
-            if (confirmation != 'success') {
+            if (confirmation != 'success'){
                 callback({message: response.body.message}, null)
                 return
             }           

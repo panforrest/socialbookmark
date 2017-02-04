@@ -23,7 +23,7 @@ class Admin extends Component {
                 return
 
             //user is logged in:
-            console.log('Current User: '+JSON.stringify(response))
+            // console.log('Current User: '+JSON.stringify(response))
             this.props.currentUserReceived(response.profile)
         })
     }

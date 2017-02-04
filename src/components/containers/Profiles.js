@@ -13,7 +13,7 @@ class Profiles extends Component {
 
     componentDidMount(){
         APIManager.get('/api/profile', null, (err, response) => {
-            console.log(JSON.stringify(response))
+            // console.log(JSON.stringify(response))
             const results = response.results
 
             this.props.profilesReceived(results)

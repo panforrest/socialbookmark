@@ -21603,7 +21603,7 @@
 					_react2.default.createElement(
 						'div',
 						{ className: 'col-md-6' },
-						'Middle'
+						_react2.default.createElement(_containers.Bookmarks, null)
 					),
 					_react2.default.createElement(
 						'div',
@@ -21628,7 +21628,7 @@
 	Object.defineProperty(exports, "__esModule", {
 		value: true
 	});
-	exports.Admin = exports.Profiles = undefined;
+	exports.Bookmarks = exports.Admin = exports.Profiles = undefined;
 	
 	var _Profiles = __webpack_require__(181);
 	
@@ -21638,10 +21638,15 @@
 	
 	var _Admin2 = _interopRequireDefault(_Admin);
 	
+	var _Bookmarks = __webpack_require__(240);
+	
+	var _Bookmarks2 = _interopRequireDefault(_Bookmarks);
+	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	exports.Profiles = _Profiles2.default;
 	exports.Admin = _Admin2.default;
+	exports.Bookmarks = _Bookmarks2.default;
 
 /***/ },
 /* 181 */
@@ -21695,7 +21700,7 @@
 	            var _this2 = this;
 	
 	            _utils.APIManager.get('/api/profile', null, function (err, response) {
-	                console.log(JSON.stringify(response));
+	                // console.log(JSON.stringify(response))
 	                var results = response.results;
 	
 	                _this2.props.profilesReceived(results);
@@ -21794,7 +21799,8 @@
 	                return;
 	            }
 	
-	            console.log('API MANAGER: ' + JSON.stringify(response.body));
+	            // console.log('API MANAGER: '+JSON.stringify(response.body))
+	
 	            var confirmation = response.body.confirmation;
 	            if (confirmation != 'success') {
 	                callback({ message: response.body.message }, null);
@@ -26135,7 +26141,7 @@
 	                if (response.profile == null) return;
 	
 	                //user is logged in:
-	                console.log('Current User: ' + JSON.stringify(response));
+	                // console.log('Current User: '+JSON.stringify(response))
 	                _this2.props.currentUserReceived(response.profile);
 	            });
 	        }
@@ -26563,6 +26569,68 @@
 				return state;
 		}
 	};
+
+/***/ },
+/* 240 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _react = __webpack_require__(1);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _utils = __webpack_require__(182);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var Bookmarks = function (_Component) {
+		_inherits(Bookmarks, _Component);
+	
+		function Bookmarks() {
+			_classCallCheck(this, Bookmarks);
+	
+			return _possibleConstructorReturn(this, (Bookmarks.__proto__ || Object.getPrototypeOf(Bookmarks)).apply(this, arguments));
+		}
+	
+		_createClass(Bookmarks, [{
+			key: 'componentDidMount',
+			value: function componentDidMount() {
+				_utils.APIManager.get('/api/bookmark', null, function (err, response) {
+					if (err) {
+						return;
+					}
+	
+					console.log('Bookmarks:' + JSON.stringify(response));
+				});
+			}
+		}, {
+			key: 'render',
+			value: function render() {
+				return _react2.default.createElement(
+					'div',
+					null,
+					'This is Bookmarks Container!'
+				);
+			}
+		}]);
+	
+		return Bookmarks;
+	}(_react.Component);
+	
+	exports.default = Bookmarks;
 
 /***/ }
 /******/ ]);
