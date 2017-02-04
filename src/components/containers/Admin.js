@@ -1,12 +1,37 @@
 import React, { Component } from 'react'
+import { APIManager } from '../../utils'
 import { connect } from 'react-redux'
 import actions from '../../actions'
 
 class Admin extends Component {
+
+    componentDidMount(){
+        //check the current user
+        APIManager.get('/account/currentuser', null, (err, response) => {
+            if (err) {
+                alert(err)
+                return
+            }
+            
+            if (response.profile == null)
+                return
+
+            //user is logged in:
+            console.log('Current User: '+JSON.stringify(response))
+            this.props.currentUserReceived(response.profile)
+        })
+    }
+
+
 	render(){
 		return (
             <div>
-                Admin Component
+                {(this.props.currentUser != null) ? <h2>Welcome {this.props.currentUser.firstName}</h2>:
+                    <div>
+                        
+                            Not Logged In
+                    </div> 
+                }       
             </div>
 		)
 	}
