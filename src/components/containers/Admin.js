@@ -58,8 +58,14 @@ class Admin extends Component {
 	render(){
 		return (
             <div>
-                {(this.props.currentUser != null) ? <h2>Welcome {this.props.currentUser.firstName}</h2>:
-                    <Signup onRegister={this.register.bind(this)} onLogin={this.login.bind(this)}/>
+                {(this.props.currentUser == null) ?  <Signup onRegister={this.register.bind(this)} onLogin={this.login.bind(this)}/> :
+                    <div>
+                        <h2>Welcome {this.props.currentUser.firstName}</h2>
+                        <input placeholder="http://www.example.com" type="text" /><br />
+                        <button>Submit Link</button>
+                    </div>
+                    
+                   
                 }       
             </div>
 		)

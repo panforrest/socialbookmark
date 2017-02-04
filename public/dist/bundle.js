@@ -58,7 +58,7 @@
 	
 	var _layout = __webpack_require__(178);
 	
-	var _stores = __webpack_require__(233);
+	var _stores = __webpack_require__(235);
 	
 	var _stores2 = _interopRequireDefault(_stores);
 	
@@ -26098,7 +26098,7 @@
 	
 	var _actions2 = _interopRequireDefault(_actions);
 	
-	var _presentation = __webpack_require__(238);
+	var _presentation = __webpack_require__(233);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
@@ -26180,12 +26180,23 @@
 	            return _react2.default.createElement(
 	                'div',
 	                null,
-	                this.props.currentUser != null ? _react2.default.createElement(
-	                    'h2',
+	                this.props.currentUser == null ? _react2.default.createElement(_presentation.Signup, { onRegister: this.register.bind(this), onLogin: this.login.bind(this) }) : _react2.default.createElement(
+	                    'div',
 	                    null,
-	                    'Welcome ',
-	                    this.props.currentUser.firstName
-	                ) : _react2.default.createElement(_presentation.Signup, { onRegister: this.register.bind(this), onLogin: this.login.bind(this) })
+	                    _react2.default.createElement(
+	                        'h2',
+	                        null,
+	                        'Welcome ',
+	                        this.props.currentUser.firstName
+	                    ),
+	                    _react2.default.createElement('input', { placeholder: 'http://www.example.com', type: 'text' }),
+	                    _react2.default.createElement('br', null),
+	                    _react2.default.createElement(
+	                        'button',
+	                        null,
+	                        'Submit Link'
+	                    )
+	                )
 	            );
 	        }
 	    }]);
@@ -26220,189 +26231,11 @@
 	'use strict';
 	
 	Object.defineProperty(exports, "__esModule", {
-					value: true
-	});
-	
-	var _redux = __webpack_require__(205);
-	
-	var _reduxThunk = __webpack_require__(234);
-	
-	var _reduxThunk2 = _interopRequireDefault(_reduxThunk);
-	
-	var _reducers = __webpack_require__(235);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	var store;
-	
-	exports.default = {
-					configureStore: function configureStore() {
-									var reducers = (0, _redux.combineReducers)({
-													profile: _reducers.profileReducer,
-													account: _reducers.accountReducer
-									});
-	
-									store = (0, _redux.createStore)(reducers, (0, _redux.applyMiddleware)(_reduxThunk2.default));
-	
-									return store;
-					},
-	
-					currentStore: function currentStore() {
-									return store;
-					}
-	
-	};
-
-/***/ },
-/* 234 */
-/***/ function(module, exports) {
-
-	'use strict';
-	
-	exports.__esModule = true;
-	function createThunkMiddleware(extraArgument) {
-	  return function (_ref) {
-	    var dispatch = _ref.dispatch,
-	        getState = _ref.getState;
-	    return function (next) {
-	      return function (action) {
-	        if (typeof action === 'function') {
-	          return action(dispatch, getState, extraArgument);
-	        }
-	
-	        return next(action);
-	      };
-	    };
-	  };
-	}
-	
-	var thunk = createThunkMiddleware();
-	thunk.withExtraArgument = createThunkMiddleware;
-	
-	exports['default'] = thunk;
-
-/***/ },
-/* 235 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-	exports.accountReducer = exports.profileReducer = undefined;
-	
-	var _profileReducer = __webpack_require__(236);
-	
-	var _profileReducer2 = _interopRequireDefault(_profileReducer);
-	
-	var _accountReducer = __webpack_require__(237);
-	
-	var _accountReducer2 = _interopRequireDefault(_accountReducer);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	exports.profileReducer = _profileReducer2.default;
-	exports.accountReducer = _accountReducer2.default;
-
-/***/ },
-/* 236 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-		value: true
-	});
-	
-	var _constants = __webpack_require__(193);
-	
-	var _constants2 = _interopRequireDefault(_constants);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	var initialState = {
-		list: [] // store all profiles in an array
-	};
-	
-	exports.default = function () {
-		var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : initialState;
-		var action = arguments[1];
-	
-		var updated = Object.assign({}, state);
-	
-		switch (action.type) {
-			case _constants2.default.PROFILES_RECEIVED:
-				//			console.log('PROFILES_RECEIVED: ' + JSON.stringify(action.profiles))
-				updated['list'] = action.profiles;
-	
-				return updated;
-	
-			case _constants2.default.PROFILE_CREATED:
-				//			console.log('PROFILE_CREATED: ' + JSON.stringify(action.profile))
-				var updatedList = Object.assign([], updated.list);
-				updatedList.push(action.profile);
-				updated['list'] = updatedList;
-	
-				return updated;
-	
-			default:
-				return state;
-		}
-	};
-
-/***/ },
-/* 237 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-		value: true
-	});
-	
-	var _constants = __webpack_require__(193);
-	
-	var _constants2 = _interopRequireDefault(_constants);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	var initialState = {
-		currentUser: null
-	};
-	
-	exports.default = function () {
-		var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : initialState;
-		var action = arguments[1];
-	
-		var updated = Object.assign({}, state);
-	
-		switch (action.type) {
-			case _constants2.default.PROFILE_CREATED:
-				updated['currentUser'] = action.profile;
-				return updated;
-	
-			case _constants2.default.CURRENT_USER_RECEIVED:
-				updated['currentUser'] = action.profile;
-				return updated;
-	
-			default:
-				return state;
-		}
-	};
-
-/***/ },
-/* 238 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
 	    value: true
 	});
 	exports.Signup = undefined;
 	
-	var _Signup = __webpack_require__(239);
+	var _Signup = __webpack_require__(234);
 	
 	var _Signup2 = _interopRequireDefault(_Signup);
 	
@@ -26411,7 +26244,7 @@
 	exports.Signup = _Signup2.default;
 
 /***/ },
-/* 239 */
+/* 234 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -26521,6 +26354,184 @@
 	}(_react.Component);
 	
 	exports.default = Signup;
+
+/***/ },
+/* 235 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+					value: true
+	});
+	
+	var _redux = __webpack_require__(205);
+	
+	var _reduxThunk = __webpack_require__(236);
+	
+	var _reduxThunk2 = _interopRequireDefault(_reduxThunk);
+	
+	var _reducers = __webpack_require__(237);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	var store;
+	
+	exports.default = {
+					configureStore: function configureStore() {
+									var reducers = (0, _redux.combineReducers)({
+													profile: _reducers.profileReducer,
+													account: _reducers.accountReducer
+									});
+	
+									store = (0, _redux.createStore)(reducers, (0, _redux.applyMiddleware)(_reduxThunk2.default));
+	
+									return store;
+					},
+	
+					currentStore: function currentStore() {
+									return store;
+					}
+	
+	};
+
+/***/ },
+/* 236 */
+/***/ function(module, exports) {
+
+	'use strict';
+	
+	exports.__esModule = true;
+	function createThunkMiddleware(extraArgument) {
+	  return function (_ref) {
+	    var dispatch = _ref.dispatch,
+	        getState = _ref.getState;
+	    return function (next) {
+	      return function (action) {
+	        if (typeof action === 'function') {
+	          return action(dispatch, getState, extraArgument);
+	        }
+	
+	        return next(action);
+	      };
+	    };
+	  };
+	}
+	
+	var thunk = createThunkMiddleware();
+	thunk.withExtraArgument = createThunkMiddleware;
+	
+	exports['default'] = thunk;
+
+/***/ },
+/* 237 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	exports.accountReducer = exports.profileReducer = undefined;
+	
+	var _profileReducer = __webpack_require__(238);
+	
+	var _profileReducer2 = _interopRequireDefault(_profileReducer);
+	
+	var _accountReducer = __webpack_require__(239);
+	
+	var _accountReducer2 = _interopRequireDefault(_accountReducer);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	exports.profileReducer = _profileReducer2.default;
+	exports.accountReducer = _accountReducer2.default;
+
+/***/ },
+/* 238 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+	
+	var _constants = __webpack_require__(193);
+	
+	var _constants2 = _interopRequireDefault(_constants);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	var initialState = {
+		list: [] // store all profiles in an array
+	};
+	
+	exports.default = function () {
+		var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : initialState;
+		var action = arguments[1];
+	
+		var updated = Object.assign({}, state);
+	
+		switch (action.type) {
+			case _constants2.default.PROFILES_RECEIVED:
+				//			console.log('PROFILES_RECEIVED: ' + JSON.stringify(action.profiles))
+				updated['list'] = action.profiles;
+	
+				return updated;
+	
+			case _constants2.default.PROFILE_CREATED:
+				//			console.log('PROFILE_CREATED: ' + JSON.stringify(action.profile))
+				var updatedList = Object.assign([], updated.list);
+				updatedList.push(action.profile);
+				updated['list'] = updatedList;
+	
+				return updated;
+	
+			default:
+				return state;
+		}
+	};
+
+/***/ },
+/* 239 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+	
+	var _constants = __webpack_require__(193);
+	
+	var _constants2 = _interopRequireDefault(_constants);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	var initialState = {
+		currentUser: null
+	};
+	
+	exports.default = function () {
+		var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : initialState;
+		var action = arguments[1];
+	
+		var updated = Object.assign({}, state);
+	
+		switch (action.type) {
+			case _constants2.default.PROFILE_CREATED:
+				updated['currentUser'] = action.profile;
+				return updated;
+	
+			case _constants2.default.CURRENT_USER_RECEIVED:
+				updated['currentUser'] = action.profile;
+				return updated;
+	
+			default:
+				return state;
+		}
+	};
 
 /***/ }
 /******/ ]);
