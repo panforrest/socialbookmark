@@ -58,7 +58,7 @@
 	
 	var _layout = __webpack_require__(178);
 	
-	var _stores = __webpack_require__(235);
+	var _stores = __webpack_require__(236);
 	
 	var _stores2 = _interopRequireDefault(_stores);
 	
@@ -21638,7 +21638,7 @@
 	
 	var _Admin2 = _interopRequireDefault(_Admin);
 	
-	var _Bookmarks = __webpack_require__(240);
+	var _Bookmarks = __webpack_require__(235);
 	
 	var _Bookmarks2 = _interopRequireDefault(_Bookmarks);
 	
@@ -23820,6 +23820,14 @@
 	        };
 	    },
 	
+	    bookmarksReceived: function bookmarksReceived(bookmarks) {
+	        // console.log('TEST: '+JSON.stringify(bookmarks))
+	        return {
+	            type: _constants2.default.BOOKMARKS_RECEIVED,
+	            bookmarks: bookmarks
+	        };
+	    },
+	
 	    profilesReceived: function profilesReceived(profiles) {
 	        return {
 	            type: _constants2.default.PROFILES_RECEIVED,
@@ -23847,6 +23855,9 @@
 	exports.default = {
 	
 	    CURRENT_USER_RECEIVED: 'CURRENT_USER_RECEIVED',
+	
+	    BOOKMARKS_RECEIVED: 'BOOKMARKS_RECEIVED',
+	
 	    PROFILES_RECEIVED: 'PROFILES_RECEIVED',
 	    PROFILE_CREATED: 'PROFILE_CREATED'
 	
@@ -26399,16 +26410,124 @@
 	'use strict';
 	
 	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _react = __webpack_require__(1);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _utils = __webpack_require__(182);
+	
+	var _reactRedux = __webpack_require__(194);
+	
+	var _actions = __webpack_require__(192);
+	
+	var _actions2 = _interopRequireDefault(_actions);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var Bookmarks = function (_Component) {
+		_inherits(Bookmarks, _Component);
+	
+		function Bookmarks() {
+			_classCallCheck(this, Bookmarks);
+	
+			var _this = _possibleConstructorReturn(this, (Bookmarks.__proto__ || Object.getPrototypeOf(Bookmarks)).call(this));
+	
+			_this.state = {
+				bookmarks: []
+			};
+			return _this;
+		}
+	
+		_createClass(Bookmarks, [{
+			key: 'componentDidMount',
+			value: function componentDidMount() {
+				var _this2 = this;
+	
+				_utils.APIManager.get('/api/bookmark', null, function (err, response) {
+					if (err) {
+						return;
+					}
+	
+					_this2.props.bookmarksReceived(response.results);
+					// console.log('Bookmarks:'+JSON.stringify(response))
+					// this.setState({
+					// 	bookmarks: response.results
+					// })
+				});
+			}
+		}, {
+			key: 'render',
+			value: function render() {
+				return _react2.default.createElement(
+					'div',
+					null,
+					_react2.default.createElement(
+						'h2',
+						null,
+						'Bookmarks'
+					),
+					_react2.default.createElement(
+						'ol',
+						null,
+						this.state.bookmarks.map(function (bookmark, i) {
+							return _react2.default.createElement(
+								'li',
+								{ key: bookmark.id },
+								bookmark.description
+							);
+						})
+					)
+				);
+			}
+		}]);
+	
+		return Bookmarks;
+	}(_react.Component);
+	
+	var stateToProps = function stateToProps(state) {
+		return {
+			bookmarks: state.bookmark
+		};
+	};
+	
+	var dispatchToProps = function dispatchToProps(dispatch) {
+		return {
+			bookmarksReceived: function bookmarksReceived(bookmarks) {
+				return dispatch(_actions2.default.bookmarksReceived(bookmarks));
+			}
+		};
+	};
+	
+	exports.default = (0, _reactRedux.connect)(stateToProps, dispatchToProps)(Bookmarks);
+
+/***/ },
+/* 236 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
 					value: true
 	});
 	
 	var _redux = __webpack_require__(205);
 	
-	var _reduxThunk = __webpack_require__(236);
+	var _reduxThunk = __webpack_require__(237);
 	
 	var _reduxThunk2 = _interopRequireDefault(_reduxThunk);
 	
-	var _reducers = __webpack_require__(237);
+	var _reducers = __webpack_require__(238);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
@@ -26418,7 +26537,8 @@
 					configureStore: function configureStore() {
 									var reducers = (0, _redux.combineReducers)({
 													profile: _reducers.profileReducer,
-													account: _reducers.accountReducer
+													account: _reducers.accountReducer,
+													bookmark: _reducers.bookmarkReducer
 									});
 	
 									store = (0, _redux.createStore)(reducers, (0, _redux.applyMiddleware)(_reduxThunk2.default));
@@ -26433,7 +26553,7 @@
 	};
 
 /***/ },
-/* 236 */
+/* 237 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -26461,7 +26581,7 @@
 	exports['default'] = thunk;
 
 /***/ },
-/* 237 */
+/* 238 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -26469,23 +26589,28 @@
 	Object.defineProperty(exports, "__esModule", {
 	    value: true
 	});
-	exports.accountReducer = exports.profileReducer = undefined;
+	exports.accountReducer = exports.bookmarkReducer = exports.profileReducer = undefined;
 	
-	var _profileReducer = __webpack_require__(238);
+	var _profileReducer = __webpack_require__(239);
 	
 	var _profileReducer2 = _interopRequireDefault(_profileReducer);
 	
-	var _accountReducer = __webpack_require__(239);
+	var _accountReducer = __webpack_require__(240);
 	
 	var _accountReducer2 = _interopRequireDefault(_accountReducer);
+	
+	var _bookmarkReducer = __webpack_require__(241);
+	
+	var _bookmarkReducer2 = _interopRequireDefault(_bookmarkReducer);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	exports.profileReducer = _profileReducer2.default;
+	exports.bookmarkReducer = _bookmarkReducer2.default;
 	exports.accountReducer = _accountReducer2.default;
 
 /***/ },
-/* 238 */
+/* 239 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -26531,7 +26656,7 @@
 	};
 
 /***/ },
-/* 239 */
+/* 240 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -26571,91 +26696,39 @@
 	};
 
 /***/ },
-/* 240 */
+/* 241 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
 	Object.defineProperty(exports, "__esModule", {
-		value: true
+	    value: true
 	});
 	
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	var _constants = __webpack_require__(193);
 	
-	var _react = __webpack_require__(1);
-	
-	var _react2 = _interopRequireDefault(_react);
-	
-	var _utils = __webpack_require__(182);
+	var _constants2 = _interopRequireDefault(_constants);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	var initialState = {};
 	
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	exports.default = function () {
+	    var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : initialState;
+	    var action = arguments[1];
 	
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	    var updated = Object.assign({}, state);
 	
-	var Bookmarks = function (_Component) {
-		_inherits(Bookmarks, _Component);
+	    switch (action.type) {
+	        case _constants2.default.BOOKMARKS_RECEIVED:
+	            console.log('BOOKMARKS_RECEIVED: ' + JSON.stringify(action.bookmarks));
 	
-		function Bookmarks() {
-			_classCallCheck(this, Bookmarks);
+	            return updated;
 	
-			var _this = _possibleConstructorReturn(this, (Bookmarks.__proto__ || Object.getPrototypeOf(Bookmarks)).call(this));
-	
-			_this.state = {
-				bookmarks: []
-			};
-			return _this;
-		}
-	
-		_createClass(Bookmarks, [{
-			key: 'componentDidMount',
-			value: function componentDidMount() {
-				var _this2 = this;
-	
-				_utils.APIManager.get('/api/bookmark', null, function (err, response) {
-					if (err) {
-						return;
-					}
-	
-					// console.log('Bookmarks:'+JSON.stringify(response))
-					_this2.setState({
-						bookmarks: response.results
-					});
-				});
-			}
-		}, {
-			key: 'render',
-			value: function render() {
-				return _react2.default.createElement(
-					'div',
-					null,
-					_react2.default.createElement(
-						'h2',
-						null,
-						'Bookmarks'
-					),
-					_react2.default.createElement(
-						'ol',
-						null,
-						this.state.bookmarks.map(function (bookmark, i) {
-							return _react2.default.createElement(
-								'li',
-								{ key: bookmark.id },
-								bookmark.description
-							);
-						})
-					)
-				);
-			}
-		}]);
-	
-		return Bookmarks;
-	}(_react.Component);
-	
-	exports.default = Bookmarks;
+	        default:
+	            return state;
+	    }
+	};
 
 /***/ }
 /******/ ]);

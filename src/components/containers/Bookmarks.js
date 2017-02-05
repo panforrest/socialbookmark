@@ -1,5 +1,7 @@
 import React, { Component } from 'react'
 import { APIManager } from '../../utils'
+import { connect } from 'react-redux'
+import actions from '../../actions'
  
 class Bookmarks extends Component {
 
@@ -15,11 +17,12 @@ class Bookmarks extends Component {
 			if (err){
 				return
 			}
-
+  
+            this.props.bookmarksReceived(response.results)
 			// console.log('Bookmarks:'+JSON.stringify(response))
-			this.setState({
-				bookmarks: response.results
-			})
+			// this.setState({
+			// 	bookmarks: response.results
+			// })
 		})
 
 		
@@ -44,4 +47,16 @@ class Bookmarks extends Component {
 
 }
 
-export default Bookmarks
+const stateToProps = (state) => {
+	return {
+		bookmarks: state.bookmark
+	}
+}
+
+const dispatchToProps = (dispatch) => {
+	return {
+		bookmarksReceived: (bookmarks) => dispatch(actions.bookmarksReceived(bookmarks))
+	}
+}
+
+export default connect(stateToProps, dispatchToProps)(Bookmarks)

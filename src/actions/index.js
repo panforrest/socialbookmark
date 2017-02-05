@@ -8,6 +8,14 @@ export default {
         }
     },
 
+    bookmarksReceived: (bookmarks) => {
+        // console.log('TEST: '+JSON.stringify(bookmarks))
+        return {
+            type: constants.BOOKMARKS_RECEIVED,
+            bookmarks: bookmarks
+        }
+    },
+
     profilesReceived: (profiles) => {
     	return {
     		type: constants.PROFILES_RECEIVED,
