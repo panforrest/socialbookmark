@@ -26480,7 +26480,7 @@
 					_react2.default.createElement(
 						'ol',
 						null,
-						this.state.bookmarks.map(function (bookmark, i) {
+						this.props.bookmarks.map(function (bookmark, i) {
 							return _react2.default.createElement(
 								'li',
 								{ key: bookmark.id },
@@ -26497,7 +26497,7 @@
 	
 	var stateToProps = function stateToProps(state) {
 		return {
-			bookmarks: state.bookmark
+			bookmarks: state.bookmark.all
 		};
 	};
 	
@@ -26711,7 +26711,9 @@
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
-	var initialState = {};
+	var initialState = {
+	    all: []
+	};
 	
 	exports.default = function () {
 	    var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : initialState;
@@ -26722,6 +26724,7 @@
 	    switch (action.type) {
 	        case _constants2.default.BOOKMARKS_RECEIVED:
 	            console.log('BOOKMARKS_RECEIVED: ' + JSON.stringify(action.bookmarks));
+	            updated['all'] = action.bookmarks;
 	
 	            return updated;
 	
