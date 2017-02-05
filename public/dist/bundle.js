@@ -23852,11 +23852,12 @@
 	        };
 	    },
 	
-	    bookmarksReceived: function bookmarksReceived(bookmarks) {
+	    bookmarksReceived: function bookmarksReceived(bookmarks, params) {
 	        // console.log('TEST: '+JSON.stringify(bookmarks))
 	        return {
 	            type: _constants2.default.BOOKMARKS_RECEIVED,
-	            bookmarks: bookmarks
+	            bookmarks: bookmarks,
+	            params: params
 	        };
 	    },
 	
@@ -26516,18 +26517,21 @@
 	
 				console.log('componentDidUpdate: ' + JSON.stringify(this.props.selected));
 	
-				_utils.APIManager.get('/api/bookmark', { profile: this.props.selected.id }, function (err, response) {
+				var params = { profile: this.props.selected.id };
+				_utils.APIManager.get('/api/bookmark', params, function (err, response) {
 					// this.props.selected.id is exactly the same request as: http://localhost:3000/api/bookmark?profile=588d7ea17fdf0302d6249db6
 					if (err) {
 						return;
 					}
 	
-					_this2.props.bookmarksReceived(response.results);
+					_this2.props.bookmarksReceived(response.results, params);
 				});
 			}
 		}, {
 			key: 'render',
 			value: function render() {
+				var list = this.props.selected == null ? null : this.props.bookmarks[this.props.selected.id];
+	
 				return _react2.default.createElement(
 					'div',
 					null,
@@ -26539,7 +26543,7 @@
 					_react2.default.createElement(
 						'ol',
 						null,
-						this.props.bookmarks.map(function (bookmark, i) {
+						list == null ? null : list.map(function (bookmark, i) {
 							return _react2.default.createElement(
 								'li',
 								{ key: bookmark.id },
@@ -26557,14 +26561,14 @@
 	var stateToProps = function stateToProps(state) {
 		return {
 			selected: state.profile.selected,
-			bookmarks: state.bookmark.all
+			bookmarks: state.bookmark
 		};
 	};
 	
 	var dispatchToProps = function dispatchToProps(dispatch) {
 		return {
-			bookmarksReceived: function bookmarksReceived(bookmarks) {
-				return dispatch(_actions2.default.bookmarksReceived(bookmarks));
+			bookmarksReceived: function bookmarksReceived(bookmarks, params) {
+				return dispatch(_actions2.default.bookmarksReceived(bookmarks, params));
 			}
 		};
 	};
@@ -26772,6 +26776,8 @@
 	    value: true
 	});
 	
+	var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+	
 	var _constants = __webpack_require__(193);
 	
 	var _constants2 = _interopRequireDefault(_constants);
@@ -26779,7 +26785,7 @@
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	var initialState = {
-	    all: []
+	    // all: []
 	};
 	
 	exports.default = function () {
@@ -26788,16 +26794,31 @@
 	
 	    var updated = Object.assign({}, state);
 	
-	    switch (action.type) {
-	        case _constants2.default.BOOKMARKS_RECEIVED:
-	            console.log('BOOKMARKS_RECEIVED: ' + JSON.stringify(action.bookmarks));
-	            updated['all'] = action.bookmarks;
+	    var _ret = function () {
+	        switch (action.type) {
+	            case _constants2.default.BOOKMARKS_RECEIVED:
+	                console.log('BOOKMARKS_RECEIVED: ' + JSON.stringify(action.bookmarks));
+	                var params = action.params;
+	                var keys = Object.keys(params);
+	                keys.forEach(function (key, i) {
+	                    var value = params[key]; // profile ID number
+	                    updated[value] = action.bookmarks;
+	                });
 	
-	            return updated;
+	                // updated['all'] = action.bookmarks
 	
-	        default:
-	            return state;
-	    }
+	                return {
+	                    v: updated
+	                };
+	
+	            default:
+	                return {
+	                    v: state
+	                };
+	        }
+	    }();
+	
+	    if ((typeof _ret === 'undefined' ? 'undefined' : _typeof(_ret)) === "object") return _ret.v;
 	};
 
 /***/ }

@@ -8,11 +8,12 @@ export default {
         }
     },
 
-    bookmarksReceived: (bookmarks) => {
+    bookmarksReceived: (bookmarks, params) => {
         // console.log('TEST: '+JSON.stringify(bookmarks))
         return {
             type: constants.BOOKMARKS_RECEIVED,
-            bookmarks: bookmarks
+            bookmarks: bookmarks,
+            params: params
         }
     },
 

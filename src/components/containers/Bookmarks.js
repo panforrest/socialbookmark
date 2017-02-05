@@ -33,24 +33,26 @@ class Bookmarks extends Component {
 	componentDidUpdate(){
 		console.log('componentDidUpdate: '+JSON.stringify(this.props.selected))
 
-		APIManager.get('/api/bookmark', {profile: this.props.selected.id}, (err, response) => {
+        const params = {profile: this.props.selected.id}
+		APIManager.get('/api/bookmark', params, (err, response) => {
 			// this.props.selected.id is exactly the same request as: http://localhost:3000/api/bookmark?profile=588d7ea17fdf0302d6249db6
 			if (err){
 				return
 			}
   
-            this.props.bookmarksReceived(response.results)
+            this.props.bookmarksReceived(response.results, params)
         })
 
 	}
 
 	render() {
+        const list = (this.props.selected == null) ? null: this.props.bookmarks[this.props.selected.id]
+
 		return (
 			<div>
 			    <h2>Bookmarks</h2>
 			    <ol>
-			        {
-                        this.props.bookmarks.map((bookmark, i) => {
+			        { (list == null) ? null: list.map((bookmark, i) => {
                         	return <li key={bookmark.id}>{bookmark.description}</li>
                         })
 			        }
@@ -66,13 +68,13 @@ class Bookmarks extends Component {
 const stateToProps = (state) => {
 	return {
 		selected: state.profile.selected,
-		bookmarks: state.bookmark.all
+		bookmarks: state.bookmark
 	}
 }
 
 const dispatchToProps = (dispatch) => {
 	return {
-		bookmarksReceived: (bookmarks) => dispatch(actions.bookmarksReceived(bookmarks))
+		bookmarksReceived: (bookmarks, params) => dispatch(actions.bookmarksReceived(bookmarks, params))
 	}
 }
 
