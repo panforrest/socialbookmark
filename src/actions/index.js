@@ -28,5 +28,15 @@ export default {
     		type: constants.PROFILE_CREATED,
     		profile: profile
     	}
+    },
+
+    profileSelected: (profile) => {
+        return {
+            type: constants.PROFILE_SELECTED,
+            profile: profile
+        }
     }
+
+
+
 }

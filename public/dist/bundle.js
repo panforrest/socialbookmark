@@ -21710,7 +21710,8 @@
 	        key: 'selectProfile',
 	        value: function selectProfile(profile, event) {
 	            event.preventDefault();
-	            console.log('Select Profiles: ' + JSON.stringify(profile));
+	            // console.log('Select Profiles: '+JSON.stringify(profile))
+	            this.props.profileSelected(profile);
 	        }
 	    }, {
 	        key: 'render',
@@ -21775,6 +21776,9 @@
 	    return {
 	        profilesReceived: function profilesReceived(profiles) {
 	            return dispatch(_actions2.default.profilesReceived(profiles));
+	        },
+	        profileSelected: function profileSelected(profile) {
+	            return dispatch(_actions2.default.profileSelected(profile));
 	        }
 	    };
 	};
@@ -23868,7 +23872,15 @@
 	            type: _constants2.default.PROFILE_CREATED,
 	            profile: profile
 	        };
+	    },
+	
+	    profileSelected: function profileSelected(profile) {
+	        return {
+	            type: _constants2.default.PROFILE_SELECTED,
+	            profile: profile
+	        };
 	    }
+	
 	};
 
 /***/ },
@@ -23887,7 +23899,8 @@
 	    BOOKMARKS_RECEIVED: 'BOOKMARKS_RECEIVED',
 	
 	    PROFILES_RECEIVED: 'PROFILES_RECEIVED',
-	    PROFILE_CREATED: 'PROFILE_CREATED'
+	    PROFILE_CREATED: 'PROFILE_CREATED',
+	    PROFILE_SELECTED: 'PROFILE_SELECTED'
 	
 	};
 
@@ -26677,6 +26690,11 @@
 				var updatedList = Object.assign([], updated.list);
 				updatedList.push(action.profile);
 				updated['list'] = updatedList;
+	
+				return updated;
+	
+			case _constants2.default.PROFILE_SELECTED:
+				console.log('PROFILE_SELECTED: ' + JSON.stringify(action.profile));
 	
 				return updated;
 	

@@ -22,7 +22,8 @@ class Profiles extends Component {
 
     selectProfile(profile, event){
         event.preventDefault()
-        console.log('Select Profiles: '+JSON.stringify(profile))
+        // console.log('Select Profiles: '+JSON.stringify(profile))
+        this.props.profileSelected(profile)
     }
 
     render(){
@@ -58,7 +59,8 @@ const stateToProps = (state) => {
 
 const dispatchToProps = (dispatch) => {
     return {
-        profilesReceived: (profiles) => dispatch(actions.profilesReceived(profiles))
+        profilesReceived: (profiles) => dispatch(actions.profilesReceived(profiles)),
+        profileSelected: (profile) => dispatch(actions.profileSelected(profile))
     }
 }
 
