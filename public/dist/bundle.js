@@ -26493,19 +26493,26 @@
 		_createClass(Bookmarks, [{
 			key: 'componentDidMount',
 			value: function componentDidMount() {
-				var _this2 = this;
+				// APIManager.get('/api/bookmark', null, (err, response) => {
+				// 	if (err){
+				// 		return
+				// 	}
 	
-				_utils.APIManager.get('/api/bookmark', null, function (err, response) {
-					if (err) {
-						return;
-					}
+				//           this.props.bookmarksReceived(response.results)
 	
-					_this2.props.bookmarksReceived(response.results);
-					// console.log('Bookmarks:'+JSON.stringify(response))
-					// this.setState({
-					// 	bookmarks: response.results
-					// })
-				});
+	
+				// 	// console.log('Bookmarks:'+JSON.stringify(response))
+				// 	// this.setState({
+				// 	// 	bookmarks: response.results
+				// 	// })
+				// })
+	
+	
+			}
+		}, {
+			key: 'componentDidUpdate',
+			value: function componentDidUpdate() {
+				console.log('componentDidUpdate: ' + JSON.stringify(this.props.selected));
 			}
 		}, {
 			key: 'render',
@@ -26538,6 +26545,7 @@
 	
 	var stateToProps = function stateToProps(state) {
 		return {
+			selected: state.profile.selected,
 			bookmarks: state.bookmark.all
 		};
 	};

@@ -13,19 +13,25 @@ class Bookmarks extends Component {
     }
 
 	componentDidMount(){
-		APIManager.get('/api/bookmark', null, (err, response) => {
-			if (err){
-				return
-			}
+		// APIManager.get('/api/bookmark', null, (err, response) => {
+		// 	if (err){
+		// 		return
+		// 	}
   
-            this.props.bookmarksReceived(response.results)
-			// console.log('Bookmarks:'+JSON.stringify(response))
-			// this.setState({
-			// 	bookmarks: response.results
-			// })
-		})
+  //           this.props.bookmarksReceived(response.results)
+
+
+		// 	// console.log('Bookmarks:'+JSON.stringify(response))
+		// 	// this.setState({
+		// 	// 	bookmarks: response.results
+		// 	// })
+		// })
 
 		
+	}
+
+	componentDidUpdate(){
+		console.log('componentDidUpdate: '+JSON.stringify(this.props.selected))
 	}
 
 	render() {
@@ -49,6 +55,7 @@ class Bookmarks extends Component {
 
 const stateToProps = (state) => {
 	return {
+		selected: state.profile.selected,
 		bookmarks: state.bookmark.all
 	}
 }
