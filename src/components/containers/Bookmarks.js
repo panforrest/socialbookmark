@@ -32,6 +32,16 @@ class Bookmarks extends Component {
 
 	componentDidUpdate(){
 		console.log('componentDidUpdate: '+JSON.stringify(this.props.selected))
+
+		APIManager.get('/api/bookmark', {profile: this.props.selected.id}, (err, response) => {
+			// this.props.selected.id is exactly the same request as: http://localhost:3000/api/bookmark?profile=588d7ea17fdf0302d6249db6
+			if (err){
+				return
+			}
+  
+            this.props.bookmarksReceived(response.results)
+        })
+
 	}
 
 	render() {

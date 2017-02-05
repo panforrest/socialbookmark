@@ -26512,7 +26512,18 @@
 		}, {
 			key: 'componentDidUpdate',
 			value: function componentDidUpdate() {
+				var _this2 = this;
+	
 				console.log('componentDidUpdate: ' + JSON.stringify(this.props.selected));
+	
+				_utils.APIManager.get('/api/bookmark', { profile: this.props.selected.id }, function (err, response) {
+					// this.props.selected.id is exactly the same request as: http://localhost:3000/api/bookmark?profile=588d7ea17fdf0302d6249db6
+					if (err) {
+						return;
+					}
+	
+					_this2.props.bookmarksReceived(response.results);
+				});
 			}
 		}, {
 			key: 'render',
