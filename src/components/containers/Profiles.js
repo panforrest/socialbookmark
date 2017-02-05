@@ -22,9 +22,17 @@ class Profiles extends Component {
 
     render(){
         const list = this.props.profiles.map((profile, i) => {
+            let name = null
+            if (this.props.selected == null)
+                name = <span>{ profile.firstName }</span> 
+            else if (this.props.selected.id == profile.id) 
+                name = <strong style={{color:'red'}}>{ profile.firstName }</strong>
+            else
+                name = <span>{ profile.firstName }</span>
+
             return (
-                <li key={profile.id}>{ profile.firstName }</li>
-            )
+                <li key={profile.id}>{name}</li>
+            ) 
         })
 
         return (
@@ -40,7 +48,8 @@ class Profiles extends Component {
 
 const stateToProps = (state) => {
     return {
-        profiles: state.profile.list
+        profiles: state.profile.list,
+        selected: state.profile.selected
     }
 }
 

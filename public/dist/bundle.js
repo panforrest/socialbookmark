@@ -21709,11 +21709,28 @@
 	    }, {
 	        key: 'render',
 	        value: function render() {
+	            var _this3 = this;
+	
 	            var list = this.props.profiles.map(function (profile, i) {
+	                var name = null;
+	                if (_this3.props.selected == null) name = _react2.default.createElement(
+	                    'span',
+	                    null,
+	                    profile.firstName
+	                );else if (_this3.props.selected.id == profile.id) name = _react2.default.createElement(
+	                    'strong',
+	                    { style: { color: 'red' } },
+	                    profile.firstName
+	                );else name = _react2.default.createElement(
+	                    'span',
+	                    null,
+	                    profile.firstName
+	                );
+	
 	                return _react2.default.createElement(
 	                    'li',
 	                    { key: profile.id },
-	                    profile.firstName
+	                    name
 	                );
 	            });
 	
@@ -21739,7 +21756,8 @@
 	
 	var stateToProps = function stateToProps(state) {
 	    return {
-	        profiles: state.profile.list
+	        profiles: state.profile.list,
+	        selected: state.profile.selected
 	    };
 	};
 	
@@ -26626,7 +26644,8 @@
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	var initialState = {
-		list: [] // store all profiles in an array
+		list: [], // store all profiles in an array
+		selected: null
 	};
 	
 	exports.default = function () {
@@ -26639,6 +26658,7 @@
 			case _constants2.default.PROFILES_RECEIVED:
 				//			console.log('PROFILES_RECEIVED: ' + JSON.stringify(action.profiles))
 				updated['list'] = action.profiles;
+				if (action.profiles.length > 0) updated['selected'] = action.profiles[0];
 	
 				return updated;
 	
