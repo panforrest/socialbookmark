@@ -17,6 +17,13 @@ export default {
         }
     },
 
+    bookmarkCreated: (bookmark) => {
+        return {
+            type: constants.BOOKMARK_CREATED,
+            bookmark: bookmark
+        }
+    },
+
     profilesReceived: (profiles) => {
     	return {
     		type: constants.PROFILES_RECEIVED,

@@ -23861,6 +23861,13 @@
 	        };
 	    },
 	
+	    bookmarkCreated: function bookmarkCreated(bookmark) {
+	        return {
+	            type: _constants2.default.BOOKMARK_CREATED,
+	            bookmark: bookmark
+	        };
+	    },
+	
 	    profilesReceived: function profilesReceived(profiles) {
 	        return {
 	            type: _constants2.default.PROFILES_RECEIVED,
@@ -23898,7 +23905,7 @@
 	    CURRENT_USER_RECEIVED: 'CURRENT_USER_RECEIVED',
 	
 	    BOOKMARKS_RECEIVED: 'BOOKMARKS_RECEIVED',
-	
+	    BOOKMARK_CREATED: 'BOOKMARK_CREATED',
 	    PROFILES_RECEIVED: 'PROFILES_RECEIVED',
 	    PROFILE_CREATED: 'PROFILE_CREATED',
 	    PROFILE_SELECTED: 'PROFILE_SELECTED'
@@ -26247,6 +26254,8 @@
 	    }, {
 	        key: 'submitLink',
 	        value: function submitLink(event) {
+	            var _this5 = this;
+	
 	            event.preventDefault();
 	            console.log('submitLink: ' + this.state.link);
 	
@@ -26262,6 +26271,7 @@
 	                }
 	
 	                console.log('Submit Link: ' + JSON.stringify(response));
+	                _this5.props.bookmarkCreated(response.result);
 	            });
 	        }
 	    }, {
@@ -26308,6 +26318,9 @@
 	        },
 	        currentUserReceived: function currentUserReceived(profile) {
 	            return dispatch(_actions2.default.currentUserReceived(profile));
+	        },
+	        bookmarkCreated: function bookmarkCreated(bookmark) {
+	            return dispatch(_actions2.default.bookmarkCreated(bookmark));
 	        }
 	    };
 	};
@@ -26809,6 +26822,18 @@
 	                });
 	
 	                // updated['all'] = action.bookmarks
+	
+	                return {
+	                    v: updated
+	                };
+	
+	            case _constants2.default.BOOKMARK_CREATED:
+	                var list = updated[action.bookmark.profile] ? updated[action.bookmark.profile] : [];
+	                list.push(action.bookmark);
+	                updated[action.bookmark.proifle] = list;
+	                return {
+	                    v: updated
+	                };
 	
 	                return {
 	                    v: updated

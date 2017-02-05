@@ -83,6 +83,7 @@ class Admin extends Component {
             }
 
             console.log('Submit Link: '+JSON.stringify(response))
+            this.props.bookmarkCreated(response.result)
         })
     }
 
@@ -114,7 +115,8 @@ const stateToProps = (state) => {
 const dispatchToProps = (dispatch) => {
     return {
         profileCreated: (profile) => dispatch(actions.profileCreated(profile)),
-        currentUserReceived: (profile) => dispatch(actions.currentUserReceived(profile))
+        currentUserReceived: (profile) => dispatch(actions.currentUserReceived(profile)),
+        bookmarkCreated: (bookmark) => dispatch(actions.bookmarkCreated(bookmark))
     }
 }
 
