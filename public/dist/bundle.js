@@ -26516,6 +26516,9 @@
 				var _this2 = this;
 	
 				console.log('componentDidUpdate: ' + JSON.stringify(this.props.selected));
+				var list = this.props.bookmarks[this.props.selected.id];
+				if (list != null) //already there, no need to query
+					return;
 	
 				var params = { profile: this.props.selected.id };
 				_utils.APIManager.get('/api/bookmark', params, function (err, response) {
