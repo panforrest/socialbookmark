@@ -26695,7 +26695,7 @@
 	
 			case _constants2.default.PROFILE_SELECTED:
 				console.log('PROFILE_SELECTED: ' + JSON.stringify(action.profile));
-	
+				updated['selected'] = action.profile;
 				return updated;
 	
 			default:

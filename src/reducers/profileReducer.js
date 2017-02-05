@@ -27,7 +27,7 @@ export default (state = initialState, action) => {
 
 		case constants.PROFILE_SELECTED:
 		    console.log('PROFILE_SELECTED: ' + JSON.stringify(action.profile))
-
+		    updated['selected'] = action.profile
 		    return updated	
 
 		default:
